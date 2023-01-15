@@ -16,7 +16,7 @@ class ListofRecords extends StatelessWidget {
     Record(
       amount: 30.89,
       date: DateTime(2022, 9, 6),
-      nameofTransaction: 'Gow',
+      nameofTransaction: 'Dinner',
     ),
   ];
 
