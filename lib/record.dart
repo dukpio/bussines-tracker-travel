@@ -1,11 +1,11 @@
 class Record {
-  final String nameofTransaction = 'Train ticket';
-  final double amount = 12.99;
-  final DateTime date = DateTime.now();
+  final String name;
+  final double amount;
+  final DateTime date;
 
   Record({
-    nameofTransaction,
-    amount,
-    date,
+    required this.name,
+    required this.amount,
+    required this.date,
   });
 }

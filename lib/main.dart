@@ -16,10 +16,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Business Travel Tracker',
       theme: ThemeData(
-          backgroundColor: Color.fromARGB(255, 195, 231, 228),
-          primarySwatch: Colors.blueGrey,
-          fontFamily: 'Dolgan',
-          appBarTheme: AppBarTheme(centerTitle: true)),
+        backgroundColor: Color.fromARGB(255, 195, 231, 228),
+        primarySwatch: Colors.blueGrey,
+        appBarTheme: AppBarTheme(centerTitle: true),
+      ),
       home: MyHomePage(title: 'Business Travel Tracker'),
     );
   }
@@ -42,17 +42,17 @@ class _MyHomePageState extends State<MyHomePage> {
     Record(
       amount: 25.99,
       date: DateTime(2022, 9, 7),
-      nameofTransaction: 'Taxi to the Airport',
+      name: 'Taxi to the Airport',
     ),
     Record(
       amount: 89.99,
       date: DateTime(2022, 9, 5),
-      nameofTransaction: 'Airplane ticket',
+      name: 'Airplane ticket',
     ),
     Record(
       amount: 30.89,
       date: DateTime(2022, 9, 6),
-      nameofTransaction: 'Dinner at the Airport',
+      name: 'Dinner at the Airport',
     ),
   ];
 
@@ -110,6 +110,7 @@ class _MyHomePageState extends State<MyHomePage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           FloatingActionButton(
+            tooltip: 'Add new record',
             onPressed: null,
             child: const Icon(Icons.add),
           ),
