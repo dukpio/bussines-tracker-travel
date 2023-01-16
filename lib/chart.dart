@@ -10,6 +10,7 @@ class Chart extends StatelessWidget {
       width: 325,
       height: 115,
       child: Card(
+        elevation: 5,
         child: Column(
           children: [
             SizedBox(
