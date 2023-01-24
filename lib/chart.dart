@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class Chart extends StatelessWidget {
-  const Chart({super.key});
-  final double currentSum = 75;
+  final double sum;
+
+  Chart(this.sum);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +18,7 @@ class Chart extends StatelessWidget {
             SizedBox(
               height: 25,
             ),
-            Text('Current sum: XXX'),
+            Text('Current sum: ' + sum.toStringAsFixed(2)),
             SizedBox(
                 width: 55,
                 height: 55,
