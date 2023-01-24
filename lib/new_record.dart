@@ -57,23 +57,47 @@ class _NewRecordState extends State<NewRecord> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-        child: Container(
-      child: Column(children: [
-        TextField(
-          decoration: InputDecoration(labelText: 'Insert name'),
-          controller: nameController,
-          onSubmitted: (_) => _saveData(),
-        ),
-        TextField(
-          keyboardType: TextInputType.number,
-          controller: amountController,
-          decoration: InputDecoration(labelText: 'Insert amount'),
-          onSubmitted: (_) => _saveData(),
-        ),
-        ElevatedButton(
-            onPressed: presentDate, child: Text(elevatedDateSelectionButton())),
-      ]),
-    ));
+    return Dialog(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextField(
+                decoration: InputDecoration(labelText: 'Insert name'),
+                controller: nameController,
+                onSubmitted: (_) => _saveData(),
+              ),
+              TextField(
+                keyboardType: TextInputType.number,
+                controller: amountController,
+                decoration: InputDecoration(labelText: 'Insert amount'),
+                onSubmitted: (_) => _saveData(),
+              ),
+              ElevatedButton(
+                  onPressed: presentDate,
+                  child: Text(elevatedDateSelectionButton())),
+            ]),
+      ),
+    );
   }
 }
+
+// Dialog(
+//               child: Padding(
+//                 padding: const EdgeInsets.all(8.0),
+//                 child: Column(
+//                   mainAxisSize: MainAxisSize.min,
+//                   mainAxisAlignment: MainAxisAlignment.center,
+//                   children: <Widget>[
+//                     const Text('This is a typical dialog.'),
+//                     const SizedBox(height: 15),
+//                     TextButton(
+//                       onPressed: () {
+//                         Navigator.pop(context);
+//                       },
+//                       child: const Text('Close'),
+//                     ),
+//                   ],
+//                 ),

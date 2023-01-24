@@ -54,12 +54,10 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void insertNewRecord(BuildContext context) {
-    showModalBottomSheet(
+    showDialog(
       context: context,
       builder: (BuildContext) {
         return GestureDetector(
-          onTap: () {},
-          behavior: HitTestBehavior.opaque,
           child: NewRecord(addNewRecord),
         );
       },
