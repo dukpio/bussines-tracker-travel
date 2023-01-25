@@ -58,6 +58,8 @@ class _MyHomePageState extends State<MyHomePage> {
       context: context,
       builder: (BuildContext) {
         return GestureDetector(
+          onTap: () {},
+          behavior: HitTestBehavior.opaque,
           child: NewRecord(addNewRecord),
         );
       },
@@ -128,41 +130,23 @@ class _MyHomePageState extends State<MyHomePage> {
           SizedBox(
             width: 75,
           ),
-          Row(
-            children: [
-              SizedBox(
-                width: 20,
-              ),
-              Expanded(
-                flex: 1,
-                child: TextField(
-                  decoration: InputDecoration(labelText: 'Project name'),
-                  controller: null,
-                  onSubmitted: null,
-                ),
-              ),
-              SizedBox(
-                width: 20,
-              ),
-              Expanded(
-                child: TextField(
-                  decoration: InputDecoration(labelText: 'Project budget'),
-                  controller: null,
-                  onSubmitted: null,
-                ),
-              ),
-              SizedBox(
-                width: 20,
-              ),
-            ],
-          ),
-          Chart(amountSum()),
+          Flexible(fit: FlexFit.tight, child: Chart(amountSum())),
           SizedBox(
             height: 10,
           ),
           records.isEmpty
               ? Column(
-                  children: [Text('Empty list')],
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Please insert your first record'),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Image.asset('images/arrow.png', fit: BoxFit.cover),
+                    SizedBox(
+                      height: 100,
+                    )
+                  ],
                 )
               : SingleChildScrollView(child: ListofRecords(records)),
           SizedBox(

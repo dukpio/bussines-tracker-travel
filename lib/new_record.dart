@@ -78,26 +78,25 @@ class _NewRecordState extends State<NewRecord> {
               ElevatedButton(
                   onPressed: presentDate,
                   child: Text(elevatedDateSelectionButton())),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      _saveData();
+                    },
+                    child: const Text('Submit'),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Cancel'),
+                  ),
+                ],
+              ),
             ]),
       ),
     );
   }
 }
-
-// Dialog(
-//               child: Padding(
-//                 padding: const EdgeInsets.all(8.0),
-//                 child: Column(
-//                   mainAxisSize: MainAxisSize.min,
-//                   mainAxisAlignment: MainAxisAlignment.center,
-//                   children: <Widget>[
-//                     const Text('This is a typical dialog.'),
-//                     const SizedBox(height: 15),
-//                     TextButton(
-//                       onPressed: () {
-//                         Navigator.pop(context);
-//                       },
-//                       child: const Text('Close'),
-//                     ),
-//                   ],
-//                 ),
