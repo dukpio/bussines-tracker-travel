@@ -4,8 +4,9 @@ import 'package:intl/intl.dart';
 
 class ListofRecords extends StatelessWidget {
   final List<Record> records;
+  final Function deleteRecord;
 
-  ListofRecords(this.records);
+  ListofRecords(this.records, this.deleteRecord);
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +39,10 @@ class ListofRecords extends StatelessWidget {
                 subtitle: Text(
                   DateFormat.MMMMd().format(records[index].date),
                   style: TextStyle(fontStyle: FontStyle.italic),
+                ),
+                trailing: IconButton(
+                  icon: Icon(Icons.delete),
+                  onPressed: () => deleteRecord(records[index].name),
                 ),
               ),
             );

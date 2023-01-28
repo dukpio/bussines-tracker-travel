@@ -66,6 +66,14 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  void deleteTransaction(String name) {
+    setState(() {
+      records.removeWhere((text) {
+        return text.name == name;
+      });
+    });
+  }
+
   double amountSum() {
     if (records.isEmpty) {
       return 0;
@@ -124,35 +132,41 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          SizedBox(
-            width: 75,
-          ),
-          Flexible(fit: FlexFit.tight, child: Chart(amountSum())),
-          SizedBox(
-            height: 10,
-          ),
-          records.isEmpty
-              ? Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('Please insert your first record'),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Image.asset('images/arrow.png', fit: BoxFit.cover),
-                    SizedBox(
-                      height: 100,
-                    )
-                  ],
-                )
-              : SingleChildScrollView(child: ListofRecords(records)),
-          SizedBox(
-            width: 75,
-          ),
-        ],
+      body: Container(
+        width: double.infinity,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SizedBox(
+              width: 75,
+            ),
+            Flexible(fit: FlexFit.tight, child: Chart(amountSum())),
+            SizedBox(
+              height: 10,
+            ),
+            records.isEmpty
+                ? Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                          'Please insert your first record\nTo do this, please use the button below.'),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      // Image.asset('images/arrow.png', fit: BoxFit.cover),
+                      SizedBox(
+                        height: 100,
+                      )
+                    ],
+                  )
+                : SingleChildScrollView(
+                    child: ListofRecords(records, deleteTransaction)),
+            SizedBox(
+              width: 75,
+            ),
+          ],
+        ),
       ),
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.center,
