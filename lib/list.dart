@@ -42,7 +42,7 @@ class ListofRecords extends StatelessWidget {
                 ),
                 trailing: IconButton(
                   icon: Icon(Icons.delete),
-                  onPressed: () => deleteRecord(records[index].name),
+                  onPressed: () => deleteRecord(records[index].id),
                 ),
               ),
             );

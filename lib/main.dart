@@ -47,7 +47,12 @@ class _MyHomePageState extends State<MyHomePage> {
     double amount,
     DateTime date,
   ) {
-    final record = Record(name: name, amount: amount, date: date);
+    final record = Record(
+      name: name,
+      amount: amount,
+      date: date,
+      id: DateTime.now().toString(),
+    );
     setState(() {
       records.add(record);
     });
@@ -66,10 +71,10 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void deleteTransaction(String name) {
+  void deleteTransaction(String id) {
     setState(() {
       records.removeWhere((text) {
-        return text.name == name;
+        return text.id == id;
       });
     });
   }
