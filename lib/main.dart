@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:business_travel_tracker/new_record.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import 'chart.dart';
 import 'list.dart';
 import 'models/record.dart';
@@ -88,101 +92,125 @@ class _MyHomePageState extends State<MyHomePage> {
         .reduce((value, element) => value + element);
   }
 
-  final List<Record> records = [
-    // Record(
-    //   amount: 25.99,
-    //   date: DateTime(2022, 9, 7),
-    //   name: 'Taxi to the Airport',
-    // ),
-    // Record(
-    //   amount: 89.99,
-    //   date: DateTime(2022, 9, 5),
-    //   name: 'Airplane ticket',
-    // ),
-    // Record(
-    //   amount: 30.89,
-    //   date: DateTime(2022, 9, 6),
-    //   name: 'Dinner at the Airport',
-    // ),
-    // Record(
-    //   amount: 31.23,
-    //   date: DateTime(2022, 9, 7),
-    //   name: 'Taxi to Hotel',
-    // ),
-    // Record(
-    //   amount: 12.09,
-    //   date: DateTime(2022, 9, 6),
-    //   name: 'Coffe',
-    // ),
-    // Record(
-    //   amount: 2.89,
-    //   date: DateTime(2022, 9, 6),
-    //   name: 'Metro Ticket',
-    // ),
-    // Record(
-    //   amount: 3.5,
-    //   date: DateTime(2022, 9, 6),
-    //   name: 'Sandwich',
-    // ),
-    // Record(
-    //   amount: 15.89,
-    //   date: DateTime(2022, 9, 9),
-    //   name: 'Taxi to hotel',
-    // ),
-  ];
+  final List<Record> records = [];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Container(
-        width: double.infinity,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SizedBox(
-              width: 75,
-            ),
-            Flexible(fit: FlexFit.tight, child: Chart(amountSum())),
-            SizedBox(
-              height: 10,
-            ),
-            records.isEmpty
-                ? Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+    final mediaQuery = MediaQuery.of(context);
+    final PreferredSizeWidget appBar = Platform.isIOS
+        ? CupertinoNavigationBar(
+            middle: Text(widget.title),
+            trailing: Row(mainAxisSize: MainAxisSize.min, children: [
+              GestureDetector(
+                child: Icon(CupertinoIcons.add),
+                onTap: () => insertNewRecord(context),
+              )
+            ]),
+          )
+        : AppBar(
+            title: Text(widget.title),
+          ) as PreferredSizeWidget;
+
+    return Platform.isAndroid
+        ? Scaffold(
+            appBar: appBar,
+            body: SafeArea(
+              child: SingleChildScrollView(
+                child: Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                          'Please insert your first record\nTo do this, please use the button below.'),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      // Image.asset('images/arrow.png', fit: BoxFit.cover),
-                      SizedBox(
-                        height: 100,
-                      )
+                      Container(
+                          height: (mediaQuery.size.height -
+                                  appBar.preferredSize.height -
+                                  mediaQuery.padding.top) *
+                              0.4,
+                          child: Expanded(child: Chart(amountSum()))),
+                      records.isEmpty
+                          ? Container(
+                              width: double.infinity,
+                              height: (mediaQuery.size.height -
+                                      appBar.preferredSize.height -
+                                      mediaQuery.padding.top) *
+                                  0.6,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                      'Please insert your first record\nTo do this, please use the button below.'),
+                                ],
+                              ))
+                          : Container(
+                              height: (mediaQuery.size.height -
+                                      appBar.preferredSize.height -
+                                      mediaQuery.padding.top) *
+                                  0.6,
+                              child: SingleChildScrollView(
+                                  child: ListofRecords(
+                                      records, deleteTransaction)),
+                            ),
+                      // SizedBox(
+                      //   width: 75,
+                      // ),
                     ],
-                  )
-                : SingleChildScrollView(
-                    child: ListofRecords(records, deleteTransaction)),
-            SizedBox(
-              width: 75,
+                  ),
+                ),
+              ),
             ),
-          ],
-        ),
-      ),
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          FloatingActionButton(
-            tooltip: 'Add new record',
-            onPressed: () => insertNewRecord(context),
-            child: const Icon(Icons.add),
-          ),
-        ],
-      ),
-    );
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
+            floatingActionButton: FloatingActionButton(
+              tooltip: 'Add new record',
+              onPressed: () => insertNewRecord(context),
+              child: const Icon(Icons.add),
+            ),
+          )
+        : CupertinoPageScaffold(
+            navigationBar: appBar as ObstructingPreferredSizeWidget,
+            child: SafeArea(
+              child: SingleChildScrollView(
+                child: Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                          height: (mediaQuery.size.height -
+                                  appBar.preferredSize.height -
+                                  mediaQuery.padding.top) *
+                              0.4,
+                          child: Expanded(child: Chart(amountSum()))),
+                      records.isEmpty
+                          ? Container(
+                              width: double.infinity,
+                              height: (mediaQuery.size.height -
+                                      appBar.preferredSize.height -
+                                      mediaQuery.padding.top) *
+                                  0.6,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                      'Please insert your first record\nTo do this, please use the button below.'),
+                                ],
+                              ))
+                          : Container(
+                              height: (mediaQuery.size.height -
+                                      appBar.preferredSize.height -
+                                      mediaQuery.padding.top) *
+                                  0.6,
+                              child: SingleChildScrollView(
+                                  child: ListofRecords(
+                                      records, deleteTransaction)),
+                            ),
+                      // SizedBox(
+                      //   width: 75,
+                      // ),
+                    ],
+                  ),
+                ),
+              ),
+            ));
   }
 }
