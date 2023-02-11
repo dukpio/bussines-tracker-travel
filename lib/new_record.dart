@@ -1,5 +1,7 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-// ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
 
 class NewRecord extends StatefulWidget {
@@ -17,20 +19,35 @@ class _NewRecordState extends State<NewRecord> {
   late DateTime selectedDate;
 
   void presentDate() {
-    showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2021, 1, 1, 00, 00),
-      lastDate: DateTime.now(),
-    ).then((markedDate) {
-      if (markedDate == null) {
-        return;
-      }
-      setState(() {
-        selectedDate = markedDate;
-        selectedDateString = DateFormat.MMMMd().format(markedDate);
-      });
-    });
+    Platform.isAndroid
+        ? showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(2021, 1, 1, 00, 00),
+            lastDate: DateTime.now(),
+          ).then((markedDate) {
+            if (markedDate == null) {
+              return;
+            }
+            setState(() {
+              selectedDate = markedDate;
+              selectedDateString = DateFormat.MMMMd().format(markedDate);
+            });
+          })
+        : CupertinoDatePicker(
+            dateOrder: DatePickerDateOrder.dmy,
+            initialDateTime: DateTime.now(),
+            mode: CupertinoDatePickerMode.time,
+            minimumDate: DateTime(2021, 1, 1, 00, 00),
+            maximumDate: DateTime.now(),
+            use24hFormat: true,
+            onDateTimeChanged: (DateTime markedDate) {
+              setState(() {
+                selectedDate = markedDate;
+                selectedDateString = DateFormat.MMMMd().format(markedDate);
+              });
+            },
+          );
   }
 
   void _saveData() {
