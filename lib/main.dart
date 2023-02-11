@@ -134,13 +134,22 @@ class _MyHomePageState extends State<MyHomePage> {
                                       appBar.preferredSize.height -
                                       mediaQuery.padding.top) *
                                   0.6,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                      'Please insert your first record\nTo do this, please use the button below.'),
-                                ],
-                              ))
+                              child: Platform.isAndroid
+                                  ? Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const Text(
+                                            'Please insert your first record\nTo do this, please use the button below.'),
+                                      ],
+                                    )
+                                  : CupertinoButton.filled(
+                                      alignment: Alignment.center,
+                                      onPressed: () => insertNewRecord(context),
+                                      child: const Text(
+                                          'Please insert your first record'),
+                                    ),
+                            )
                           : Container(
                               height: (mediaQuery.size.height -
                                       appBar.preferredSize.height -
