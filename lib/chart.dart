@@ -23,30 +23,26 @@ class Chart extends StatelessWidget {
         width: 325,
         height: 115,
         child: sum < 500
-            ? Column(
-                children: [
-                  // Text(
-                  //   'Project bugdget: 500',
-                  //   style: TextStyle(fontWeight: FontWeight.bold),
-                  // ),
-                  Expanded(
-                    child: SfCircularChart(
-                        title: ChartTitle(
-                            text: 'Total budget: 500 \nCurrent status: ' +
-                                sum.toStringAsFixed(2) +
-                                '/500',
-                            textStyle: TextStyle(fontStyle: FontStyle.italic)),
-                        series: <CircularSeries>[
-                          PieSeries<ChartData, String>(
-                              dataSource: chartData,
-                              xValueMapper: (ChartData data, _) => data.x,
-                              yValueMapper: (ChartData data, _) => data.y,
-                              explode: true,
-                              explodeIndex: 1,
-                              radius: '85%')
-                        ]),
-                  )
-                ],
+            ? Container(
+                alignment: Alignment.center,
+                child: Expanded(
+                  child: SfCircularChart(
+                      title: ChartTitle(
+                          text: 'Total budget: 500 \nCurrent status: ' +
+                              sum.toStringAsFixed(2) +
+                              '/500',
+                          textStyle: TextStyle(fontStyle: FontStyle.italic)),
+                      series: <CircularSeries>[
+                        PieSeries<ChartData, String>(
+                            onPointTap: (ChartPointDetails details) {},
+                            dataSource: chartData,
+                            xValueMapper: (ChartData data, _) => data.x,
+                            yValueMapper: (ChartData data, _) => data.y,
+                            explode: true,
+                            explodeIndex: 1,
+                            radius: '85%')
+                      ]),
+                ),
               )
             : Card(
                 color: Colors.amber,
