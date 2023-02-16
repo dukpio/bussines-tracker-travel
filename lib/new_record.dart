@@ -40,18 +40,26 @@ class _NewRecordState extends State<NewRecord> {
               return Container(
                 height: MediaQuery.of(context).copyWith().size.height * 0.25,
                 color: Colors.white,
-                child: CupertinoDatePicker(
-                  mode: CupertinoDatePickerMode.date,
-                  onDateTimeChanged: (DateTime markedDate) {
-                    setState(() {
-                      selectedDate = markedDate;
-                      selectedDateString =
-                          DateFormat.MMMMd().format(markedDate);
-                    });
-                  },
-                  initialDateTime: DateTime.now(),
-                  minimumDate: DateTime(2021, 1, 1, 00, 00),
-                  maximumDate: DateTime.now(),
+                child: Column(
+                  children: [
+                    CupertinoDatePicker(
+                      mode: CupertinoDatePickerMode.date,
+                      onDateTimeChanged: (DateTime markedDate) {
+                        setState(() {
+                          selectedDate = markedDate;
+                          selectedDateString =
+                              DateFormat.MMMMd().format(markedDate);
+                        });
+                      },
+                      initialDateTime: DateTime.now(),
+                      minimumDate: DateTime(2021, 1, 1, 00, 00),
+                      maximumDate: DateTime.now(),
+                    ),
+                    CupertinoButton(
+                      child: const Text('Close'),
+                      onPressed: () => Navigator.of(context).pop(),
+                    )
+                  ],
                 ),
               );
             });
