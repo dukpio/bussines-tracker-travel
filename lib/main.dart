@@ -106,6 +106,19 @@ class _MyHomePageState extends State<MyHomePage> {
         ]);
   }
 
+  double maxAmount = 0;
+  final maxAmountcontroller = TextEditingController();
+
+  void saveMaxamount() {
+    if (maxAmountcontroller.text.isEmpty) {
+      return;
+    } else {
+      setState(() {
+        maxAmount = double.parse(maxAmountcontroller.text);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
@@ -129,122 +142,170 @@ class _MyHomePageState extends State<MyHomePage> {
             title: Text(widget.title),
           ) as PreferredSizeWidget;
 
-    return Platform.isAndroid
-        ? Scaffold(
-            appBar: appBar,
-            body: SafeArea(
-              child: SingleChildScrollView(
-                child: Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                          height: (mediaQuery.size.height -
-                                  appBar.preferredSize.height -
-                                  mediaQuery.padding.top) *
-                              0.4,
-                          child: Expanded(child: Chart(amountSum()))),
-                      records.isEmpty
-                          ? Container(
-                              width: double.infinity,
+    return maxAmount != 0
+        ? Platform.isAndroid
+            ? Scaffold(
+                appBar: appBar,
+                body: SafeArea(
+                  child: SingleChildScrollView(
+                    child: Container(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
                               height: (mediaQuery.size.height -
                                       appBar.preferredSize.height -
                                       mediaQuery.padding.top) *
-                                  0.6,
-                              child: Platform.isAndroid
-                                  ? Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        const Text(
-                                            'Please insert your first record\nTo do this, please use the button below.'),
-                                      ],
-                                    )
-                                  : Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        CupertinoButton.filled(
-                                          alignment: Alignment.center,
-                                          onPressed: () =>
-                                              insertNewRecord(context),
-                                          child: const Text(
-                                              'Please insert your first record'),
+                                  0.4,
+                              child: Expanded(
+                                  child: Chart(amountSum(), maxAmount))),
+                          records.isEmpty
+                              ? Container(
+                                  width: double.infinity,
+                                  height: (mediaQuery.size.height -
+                                          appBar.preferredSize.height -
+                                          mediaQuery.padding.top) *
+                                      0.6,
+                                  child: Platform.isAndroid
+                                      ? Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            const Text(
+                                                'Please insert your first record\nTo do this, please use the button below.'),
+                                          ],
+                                        )
+                                      : Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            CupertinoButton.filled(
+                                              alignment: Alignment.center,
+                                              onPressed: () =>
+                                                  insertNewRecord(context),
+                                              child: const Text(
+                                                  'Please insert your first record'),
+                                            ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
-                            )
-                          : Container(
+                                )
+                              : Container(
+                                  height: (mediaQuery.size.height -
+                                          appBar.preferredSize.height -
+                                          mediaQuery.padding.top) *
+                                      0.6,
+                                  child: SingleChildScrollView(
+                                      child: ListofRecords(
+                                          records, deleteTransaction)),
+                                ),
+                          // SizedBox(
+                          //   width: 75,
+                          // ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                floatingActionButtonLocation:
+                    FloatingActionButtonLocation.centerFloat,
+                floatingActionButton: FloatingActionButton(
+                  tooltip: 'Add new record',
+                  onPressed: () => insertNewRecord(context),
+                  child: const Icon(Icons.add),
+                ),
+              )
+            : CupertinoPageScaffold(
+                navigationBar: appBar as ObstructingPreferredSizeWidget,
+                child: SafeArea(
+                  child: SingleChildScrollView(
+                    child: Container(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
                               height: (mediaQuery.size.height -
                                       appBar.preferredSize.height -
                                       mediaQuery.padding.top) *
-                                  0.6,
-                              child: SingleChildScrollView(
-                                  child: ListofRecords(
-                                      records, deleteTransaction)),
-                            ),
-                      // SizedBox(
-                      //   width: 75,
-                      // ),
-                    ],
+                                  0.4,
+                              child: Expanded(
+                                  child: Chart(amountSum(), maxAmount))),
+                          records.isEmpty
+                              ? Container(
+                                  width: double.infinity,
+                                  height: (mediaQuery.size.height -
+                                          appBar.preferredSize.height -
+                                          mediaQuery.padding.top) *
+                                      0.6,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                          'Please insert your first record\nTo do this, please use the button below.'),
+                                    ],
+                                  ))
+                              : Container(
+                                  height: (mediaQuery.size.height -
+                                          appBar.preferredSize.height -
+                                          mediaQuery.padding.top) *
+                                      0.6,
+                                  child: SingleChildScrollView(
+                                      child: ListofRecords(
+                                          records, deleteTransaction)),
+                                ),
+                          // SizedBox(
+                          //   width: 75,
+                          // ),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ),
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerFloat,
-            floatingActionButton: FloatingActionButton(
-              tooltip: 'Add new record',
-              onPressed: () => insertNewRecord(context),
-              child: const Icon(Icons.add),
-            ),
-          )
-        : CupertinoPageScaffold(
-            navigationBar: appBar as ObstructingPreferredSizeWidget,
-            child: SafeArea(
-              child: SingleChildScrollView(
-                child: Container(
+                ))
+        : Platform.isAndroid
+            ? Scaffold(
+                appBar: appBar,
+                body: SafeArea(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
-                          height: (mediaQuery.size.height -
-                                  appBar.preferredSize.height -
-                                  mediaQuery.padding.top) *
-                              0.4,
-                          child: Expanded(child: Chart(amountSum()))),
-                      records.isEmpty
-                          ? Container(
-                              width: double.infinity,
-                              height: (mediaQuery.size.height -
-                                      appBar.preferredSize.height -
-                                      mediaQuery.padding.top) *
-                                  0.6,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                      'Please insert your first record\nTo do this, please use the button below.'),
-                                ],
-                              ))
-                          : Container(
-                              height: (mediaQuery.size.height -
-                                      appBar.preferredSize.height -
-                                      mediaQuery.padding.top) *
-                                  0.6,
-                              child: SingleChildScrollView(
-                                  child: ListofRecords(
-                                      records, deleteTransaction)),
-                            ),
-                      // SizedBox(
-                      //   width: 75,
-                      // ),
+                      Center(
+                          child: Text(
+                              'Welcome to Business Travel Tracker App! \n Please provide below the travel details \n or \n Please login to your previous trip using icon in the left corner of screen')),
+                      TextField(
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                            labelText: 'Insert total budget for this Travel'),
+                        controller: maxAmountcontroller,
+                        onSubmitted: (_) => saveMaxamount(),
+                      ),
                     ],
                   ),
                 ),
-              ),
-            ));
+              )
+            : CupertinoPageScaffold(
+                navigationBar: appBar as ObstructingPreferredSizeWidget,
+                child: SafeArea(
+                  child: SingleChildScrollView(
+                    child: Container(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Center(
+                              child: Text(
+                                  'Welcome to Business Travel Tracker App! \n Please provide below the travel details \n or \n Please login to your previous trip using icon in the left corner of screen')),
+                          CupertinoTextField(
+                            keyboardType: TextInputType.number,
+                            placeholder: 'Insert your budget',
+                            controller: maxAmountcontroller,
+                            onSubmitted: (_) => saveMaxamount(),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ));
   }
 }
