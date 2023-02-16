@@ -94,11 +94,26 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final List<Record> records = [];
 
+  void showLogin(BuildContext context) {
+    showMenu(
+        context: context,
+        position: RelativeRect.fromLTRB(0, 0, 0, 0),
+        items: [
+          PopupMenuItem<int>(
+            value: 0,
+            child: Text('Log in'),
+          ),
+        ]);
+  }
+
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     final PreferredSizeWidget appBar = Platform.isIOS
         ? CupertinoNavigationBar(
+            leading: IconButton(
+                onPressed: () => showLogin(context),
+                icon: Icon(CupertinoIcons.person_alt_circle_fill)),
             middle: Text(widget.title),
             trailing: Row(mainAxisSize: MainAxisSize.min, children: [
               GestureDetector(
@@ -108,6 +123,9 @@ class _MyHomePageState extends State<MyHomePage> {
             ]),
           )
         : AppBar(
+            leading: IconButton(
+                onPressed: () => showLogin(context),
+                icon: Icon(Icons.account_circle_sharp)),
             title: Text(widget.title),
           ) as PreferredSizeWidget;
 
