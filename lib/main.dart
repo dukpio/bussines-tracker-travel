@@ -17,7 +17,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    final isIOS = Platform.isIOS;
+    return isIOS ? CupertinoApp(
+      title: 'Business Travel Tracker',
+      home: MyHomePage(title: 'Business Travel Tracker'),
+    ) : MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Business Travel Tracker',
       theme: ThemeData(
@@ -124,17 +128,16 @@ class _MyHomePageState extends State<MyHomePage> {
     final mediaQuery = MediaQuery.of(context);
     final PreferredSizeWidget appBar = Platform.isIOS
         ? CupertinoNavigationBar(
-            leading: IconButton(
-                onPressed: () => showLogin(context),
-                icon: Icon(CupertinoIcons.person_alt_circle_fill)),
-            middle: Text(widget.title),
-            trailing: Row(mainAxisSize: MainAxisSize.min, children: [
-              GestureDetector(
-                child: Icon(CupertinoIcons.add),
-                onTap: () => insertNewRecord(context),
-              )
-            ]),
-          )
+      middle: Text(widget.title),
+      trailing:  CupertinoButton(
+          child: Icon(CupertinoIcons.add),
+        onPressed: ()=>insertNewRecord(context),
+      ),
+      leading: CupertinoButton(
+        child: Icon(CupertinoIcons.person_alt_circle_fill),
+        onPressed: ()=>showLogin(context),
+      ),
+    )
         : AppBar(
             leading: IconButton(
                 onPressed: () => showLogin(context),
