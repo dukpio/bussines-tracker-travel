@@ -34,20 +34,27 @@ class _NewRecordState extends State<NewRecord> {
               selectedDateString = DateFormat.MMMMd().format(markedDate);
             });
           })
-        : CupertinoDatePicker(
-            dateOrder: DatePickerDateOrder.dmy,
-            initialDateTime: DateTime.now(),
-            mode: CupertinoDatePickerMode.time,
-            minimumDate: DateTime(2021, 1, 1, 00, 00),
-            maximumDate: DateTime.now(),
-            use24hFormat: true,
-            onDateTimeChanged: (DateTime markedDate) {
-              setState(() {
-                selectedDate = markedDate;
-                selectedDateString = DateFormat.MMMMd().format(markedDate);
-              });
-            },
-          );
+        : showCupertinoModalPopup(
+            context: context,
+            builder: (BuildContext builder) {
+              return Container(
+                height: MediaQuery.of(context).copyWith().size.height * 0.25,
+                color: Colors.white,
+                child: CupertinoDatePicker(
+                  mode: CupertinoDatePickerMode.date,
+                  onDateTimeChanged: (DateTime markedDate) {
+                    setState(() {
+                      selectedDate = markedDate;
+                      selectedDateString =
+                          DateFormat.MMMMd().format(markedDate);
+                    });
+                  },
+                  initialDateTime: DateTime.now(),
+                  minimumDate: DateTime(2021, 1, 1, 00, 00),
+                  maximumDate: DateTime.now(),
+                ),
+              );
+            });
   }
 
   void _saveData() {

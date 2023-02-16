@@ -143,11 +143,18 @@ class _MyHomePageState extends State<MyHomePage> {
                                             'Please insert your first record\nTo do this, please use the button below.'),
                                       ],
                                     )
-                                  : CupertinoButton.filled(
-                                      alignment: Alignment.center,
-                                      onPressed: () => insertNewRecord(context),
-                                      child: const Text(
-                                          'Please insert your first record'),
+                                  : Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        CupertinoButton.filled(
+                                          alignment: Alignment.center,
+                                          onPressed: () =>
+                                              insertNewRecord(context),
+                                          child: const Text(
+                                              'Please insert your first record'),
+                                        ),
+                                      ],
                                     ),
                             )
                           : Container(
