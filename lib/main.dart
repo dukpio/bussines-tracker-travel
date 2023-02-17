@@ -21,8 +21,6 @@ class MyApp extends StatelessWidget {
     return isIOS ? CupertinoApp(
       localizationsDelegates: const [
         DefaultMaterialLocalizations.delegate,
-        DefaultCupertinoLocalizations.delegate,
-        DefaultWidgetsLocalizations.delegate,
       ],
       title: 'Business Travel Tracker',
       home: MyHomePage(title: 'Business Travel Tracker'),
