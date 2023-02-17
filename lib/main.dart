@@ -19,6 +19,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final isIOS = Platform.isIOS;
     return isIOS ? CupertinoApp(
+      localizationsDelegates: const [
+        DefaultMaterialLocalizations.delegate,
+      ],
       title: 'Business Travel Tracker',
       home: MyHomePage(title: 'Business Travel Tracker'),
     ) : MaterialApp(
