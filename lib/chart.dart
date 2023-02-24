@@ -30,13 +30,13 @@ class Chart extends StatelessWidget {
                 child: Expanded(
                   child: SfCircularChart(
                       title: ChartTitle(
-                          text: 'Total budget:' +
+                          text: 'Total budget: ' +
                               maxAmount.toString() +
                               '\nCurrent status: ' +
                               sum.toStringAsFixed(2) +
                               '/' +
                               maxAmount.toStringAsFixed(2),
-                          textStyle: TextStyle(fontStyle: FontStyle.italic)),
+                          textStyle: const TextStyle(fontStyle: FontStyle.italic)),
                       series: <CircularSeries>[
                         PieSeries<ChartData, String>(
                             onPointTap: (ChartPointDetails details) {},
@@ -58,7 +58,7 @@ class Chart extends StatelessWidget {
                         sum.toStringAsFixed(2) +
                         '/' +
                         maxAmount.toString(),
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
               ));

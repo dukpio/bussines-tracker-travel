@@ -97,14 +97,14 @@ class _NewRecordState extends State<NewRecord> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextField(
-                decoration: InputDecoration(labelText: 'Insert name'),
+                decoration: const InputDecoration(labelText: 'Insert name'),
                 controller: nameController,
                 onSubmitted: (_) => _saveData(),
               ),
               TextField(
                 keyboardType: TextInputType.number,
                 controller: amountController,
-                decoration: InputDecoration(labelText: 'Insert amount'),
+                decoration: const InputDecoration(labelText: 'Insert amount'),
                 onSubmitted: (_) => _saveData(),
               ),
               ElevatedButton(
