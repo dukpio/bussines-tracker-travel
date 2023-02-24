@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:business_travel_tracker/empty_list.dart';
 import 'package:business_travel_tracker/models/app_bar.dart';
 import 'package:business_travel_tracker/new_record.dart';
+import 'package:business_travel_tracker/updated_list.dart';
 import 'package:business_travel_tracker/welcome_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -130,33 +132,9 @@ class MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  // void refresh(dynamic childValue) {
-  //   setState(() {
-  //     maxAmount = childValue;
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
-    // final PreferredSizeWidget appBar = Platform.isIOS
-    //     ? CupertinoNavigationBar(
-    //         middle: Text(widget.title),
-    //         trailing: CupertinoButton(
-    //           child: const Icon(CupertinoIcons.add),
-    //           onPressed: () => insertNewRecord(context),
-    //         ),
-    //         leading: CupertinoButton(
-    //           child: const Icon(CupertinoIcons.person_alt_circle_fill),
-    //           onPressed: () => showLogin(context),
-    //         ),
-    //       )
-    //     : AppBar(
-    //         leading: IconButton(
-    //             onPressed: () => showLogin(context),
-    //             icon: const Icon(Icons.account_circle_sharp)),
-    //         title: Text(widget.title),
-    //       ) as PreferredSizeWidget;
 
     return maxAmount != 0
         ? Platform.isAndroid
@@ -177,47 +155,8 @@ class MyHomePageState extends State<MyHomePage> {
                               child: Expanded(
                                   child: Chart(amountSum(), maxAmount))),
                           records.isEmpty
-                              ? Container(
-                                  width: double.infinity,
-                                  height: (mediaQuery.size.height -
-                                          60 -
-                                          mediaQuery.padding.top) *
-                                      0.6,
-                                  child: Platform.isAndroid
-                                      ? Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            const Text(
-                                                'Please insert your first record\nTo do this, please use the button below.'),
-                                          ],
-                                        )
-                                      : Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            CupertinoButton.filled(
-                                              alignment: Alignment.center,
-                                              onPressed: () =>
-                                                  insertNewRecord(context),
-                                              child: const Text(
-                                                  'Please insert your first record'),
-                                            ),
-                                          ],
-                                        ),
-                                )
-                              : Container(
-                                  height: (mediaQuery.size.height -
-                                          60 -
-                                          mediaQuery.padding.top) *
-                                      0.6,
-                                  child: SingleChildScrollView(
-                                      child: ListofRecords(
-                                          records, deleteTransaction)),
-                                ),
-                          // SizedBox(
-                          //   width: 75,
-                          // ),
+                              ? EmptyPage(insertNewRecord)
+                              : UpdatedList(deleteTransaction, records),
                         ],
                       ),
                     ),
@@ -249,31 +188,8 @@ class MyHomePageState extends State<MyHomePage> {
                               child: Expanded(
                                   child: Chart(amountSum(), maxAmount))),
                           records.isEmpty
-                              ? Container(
-                                  width: double.infinity,
-                                  height: (mediaQuery.size.height -
-                                          60 -
-                                          mediaQuery.padding.top) *
-                                      0.6,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Text(
-                                          'Please insert your first record\nTo do this, please use the button below.'),
-                                    ],
-                                  ))
-                              : Container(
-                                  height: (mediaQuery.size.height -
-                                          60 -
-                                          mediaQuery.padding.top) *
-                                      0.6,
-                                  child: SingleChildScrollView(
-                                      child: ListofRecords(
-                                          records, deleteTransaction)),
-                                ),
-                          // SizedBox(
-                          //   width: 75,
-                          // ),
+                              ? EmptyPage(insertNewRecord)
+                              : UpdatedList(deleteTransaction, records),
                         ],
                       ),
                     ),
@@ -284,7 +200,6 @@ class MyHomePageState extends State<MyHomePage> {
             saveMaxamount,
             showLogin,
             maxAmountcontroller,
-            // notifyParent: refresh,
           );
   }
 }

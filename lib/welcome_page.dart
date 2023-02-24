@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:business_travel_tracker/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -14,12 +13,6 @@ class WelcomePage extends StatefulWidget {
   final Function saveMaxamount;
 
   TextEditingController maxAmountcontroller;
-
-  // final Function notifyParent;
-
-  // WelcomePage(this.insertNewRecord, this.saveMaxamount, this.showLogin,
-  //     TextEditingController maxAmountcontroller, this.maxAmount,
-  //     {super.key, required this.notifyParent});
 
   WelcomePage(this.insertNewRecord, this.saveMaxamount, this.showLogin,
       this.maxAmountcontroller,
@@ -50,7 +43,6 @@ class _WelcomePageState extends State<WelcomePage> {
                         labelText: 'Insert total budget for this Travel'),
                     controller: widget.maxAmountcontroller,
                     onSubmitted: (_) => widget.saveMaxamount(),
-                    // onSubmitted: (_) => widget.notifyParent(maxAmount),
                   ),
                 ],
               ),
@@ -74,7 +66,6 @@ class _WelcomePageState extends State<WelcomePage> {
                         placeholder: 'Insert your budget',
                         controller: widget.maxAmountcontroller,
                         onSubmitted: (_) => widget.saveMaxamount(),
-                        // onSubmitted: (_) => widget.notifyParent(maxAmount),
                       ),
                     ],
                   ),
