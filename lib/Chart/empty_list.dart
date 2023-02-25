@@ -1,14 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-
-import 'models/app_bar.dart';
 
 class EmptyPage extends StatefulWidget {
   final Function insertNewRecord;
 
-  EmptyPage(this.insertNewRecord, {super.key});
+  const EmptyPage(this.insertNewRecord, {super.key});
 
   @override
   State<EmptyPage> createState() => _EmptyPageState();

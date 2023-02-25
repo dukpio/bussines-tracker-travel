@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'list.dart';
-import 'models/record.dart';
+import '../list.dart';
+import '../models/record.dart';
 
 class UpdatedList extends StatefulWidget {
   final List<Record> records;

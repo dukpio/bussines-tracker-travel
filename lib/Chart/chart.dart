@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import './main.dart';
 
 class ChartData {
   ChartData(this.x, this.y);
@@ -36,7 +34,8 @@ class Chart extends StatelessWidget {
                               sum.toStringAsFixed(2) +
                               '/' +
                               maxAmount.toStringAsFixed(2),
-                          textStyle: const TextStyle(fontStyle: FontStyle.italic)),
+                          textStyle:
+                              const TextStyle(fontStyle: FontStyle.italic)),
                       series: <CircularSeries>[
                         PieSeries<ChartData, String>(
                             onPointTap: (ChartPointDetails details) {},

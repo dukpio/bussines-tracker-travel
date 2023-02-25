@@ -1,14 +1,14 @@
 import 'dart:io';
 
-import 'package:business_travel_tracker/empty_list.dart';
-import 'package:business_travel_tracker/models/app_bar.dart';
+import 'package:business_travel_tracker/Chart/empty_list.dart';
+import 'package:business_travel_tracker/app_bar.dart';
 import 'package:business_travel_tracker/new_record.dart';
-import 'package:business_travel_tracker/updated_list.dart';
+import 'package:business_travel_tracker/Chart/updated_list.dart';
 import 'package:business_travel_tracker/welcome_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'chart.dart';
+import 'Chart/chart.dart';
 import 'list.dart';
 import 'models/record.dart';
 
