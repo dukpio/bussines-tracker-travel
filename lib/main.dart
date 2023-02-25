@@ -1,10 +1,14 @@
 import 'dart:io';
 
+import 'package:business_travel_tracker/Chart/empty_list.dart';
+import 'package:business_travel_tracker/app_bar.dart';
 import 'package:business_travel_tracker/new_record.dart';
+import 'package:business_travel_tracker/Chart/updated_list.dart';
+import 'package:business_travel_tracker/welcome_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'chart.dart';
+import 'Chart/chart.dart';
 import 'list.dart';
 import 'models/record.dart';
 
@@ -18,23 +22,25 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isIOS = Platform.isIOS;
-    return isIOS ? CupertinoApp(
-      localizationsDelegates: const [
-        DefaultMaterialLocalizations.delegate,
-      ],
-      title: 'Business Travel Tracker',
-      home: MyHomePage(title: 'Business Travel Tracker'),
-    ) : MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Business Travel Tracker',
-      theme: ThemeData(
-        backgroundColor: Color.fromARGB(255, 195, 231, 228),
-        primarySwatch: Colors.blueGrey,
-        appBarTheme: AppBarTheme(centerTitle: true),
-        fontFamily: 'Garute',
-      ),
-      home: MyHomePage(title: 'Business Travel Tracker'),
-    );
+    return isIOS
+        ? CupertinoApp(
+            localizationsDelegates: const [
+              DefaultMaterialLocalizations.delegate,
+            ],
+            title: 'Business Travel Tracker',
+            home: MyHomePage(title: 'Business Travel Tracker'),
+          )
+        : MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Business Travel Tracker',
+            theme: ThemeData(
+              backgroundColor: Color.fromARGB(255, 195, 231, 228),
+              primarySwatch: Colors.blueGrey,
+              appBarTheme: AppBarTheme(centerTitle: true),
+              fontFamily: 'Garute',
+            ),
+            home: MyHomePage(title: 'Business Travel Tracker'),
+          );
   }
 }
 
@@ -49,10 +55,10 @@ class MyHomePage extends StatefulWidget {
   final List<Record> records = [];
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<MyHomePage> createState() => MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class MyHomePageState extends State<MyHomePage> {
   void addNewRecord(
     String name,
     double amount,
@@ -129,29 +135,11 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
-    final PreferredSizeWidget appBar = Platform.isIOS
-        ? CupertinoNavigationBar(
-      middle: Text(widget.title),
-      trailing:  CupertinoButton(
-          child: Icon(CupertinoIcons.add),
-        onPressed: ()=>insertNewRecord(context),
-      ),
-      leading: CupertinoButton(
-        child: Icon(CupertinoIcons.person_alt_circle_fill),
-        onPressed: ()=>showLogin(context),
-      ),
-    )
-        : AppBar(
-            leading: IconButton(
-                onPressed: () => showLogin(context),
-                icon: Icon(Icons.account_circle_sharp)),
-            title: Text(widget.title),
-          ) as PreferredSizeWidget;
 
     return maxAmount != 0
         ? Platform.isAndroid
             ? Scaffold(
-                appBar: appBar,
+                appBar: MyAppBar(insertNewRecord, showLogin),
                 body: SafeArea(
                   child: SingleChildScrollView(
                     child: Container(
@@ -161,53 +149,14 @@ class _MyHomePageState extends State<MyHomePage> {
                         children: [
                           Container(
                               height: (mediaQuery.size.height -
-                                      appBar.preferredSize.height -
+                                      60 -
                                       mediaQuery.padding.top) *
                                   0.4,
                               child: Expanded(
                                   child: Chart(amountSum(), maxAmount))),
                           records.isEmpty
-                              ? Container(
-                                  width: double.infinity,
-                                  height: (mediaQuery.size.height -
-                                          appBar.preferredSize.height -
-                                          mediaQuery.padding.top) *
-                                      0.6,
-                                  child: Platform.isAndroid
-                                      ? Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            const Text(
-                                                'Please insert your first record\nTo do this, please use the button below.'),
-                                          ],
-                                        )
-                                      : Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            CupertinoButton.filled(
-                                              alignment: Alignment.center,
-                                              onPressed: () =>
-                                                  insertNewRecord(context),
-                                              child: const Text(
-                                                  'Please insert your first record'),
-                                            ),
-                                          ],
-                                        ),
-                                )
-                              : Container(
-                                  height: (mediaQuery.size.height -
-                                          appBar.preferredSize.height -
-                                          mediaQuery.padding.top) *
-                                      0.6,
-                                  child: SingleChildScrollView(
-                                      child: ListofRecords(
-                                          records, deleteTransaction)),
-                                ),
-                          // SizedBox(
-                          //   width: 75,
-                          // ),
+                              ? EmptyPage(insertNewRecord)
+                              : UpdatedList(deleteTransaction, records),
                         ],
                       ),
                     ),
@@ -222,7 +171,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               )
             : CupertinoPageScaffold(
-                navigationBar: appBar as ObstructingPreferredSizeWidget,
+                navigationBar: MyAppBar(insertNewRecord, showLogin)
+                    as ObstructingPreferredSizeWidget,
                 child: SafeArea(
                   child: SingleChildScrollView(
                     child: Container(
@@ -232,86 +182,24 @@ class _MyHomePageState extends State<MyHomePage> {
                         children: [
                           Container(
                               height: (mediaQuery.size.height -
-                                      appBar.preferredSize.height -
+                                      60 -
                                       mediaQuery.padding.top) *
                                   0.4,
                               child: Expanded(
                                   child: Chart(amountSum(), maxAmount))),
                           records.isEmpty
-                              ? Container(
-                                  width: double.infinity,
-                                  height: (mediaQuery.size.height -
-                                          appBar.preferredSize.height -
-                                          mediaQuery.padding.top) *
-                                      0.6,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                          'Please insert your first record\nTo do this, please use the button below.'),
-                                    ],
-                                  ))
-                              : Container(
-                                  height: (mediaQuery.size.height -
-                                          appBar.preferredSize.height -
-                                          mediaQuery.padding.top) *
-                                      0.6,
-                                  child: SingleChildScrollView(
-                                      child: ListofRecords(
-                                          records, deleteTransaction)),
-                                ),
-                          // SizedBox(
-                          //   width: 75,
-                          // ),
+                              ? EmptyPage(insertNewRecord)
+                              : UpdatedList(deleteTransaction, records),
                         ],
                       ),
                     ),
                   ),
                 ))
-        : Platform.isAndroid
-            ? Scaffold(
-                appBar: appBar,
-                body: SafeArea(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Center(
-                          child: Text(
-                              'Welcome to Business Travel Tracker App! \n Please provide below the travel details \n or \n Please login to your previous trip using icon in the left corner of screen')),
-                      TextField(
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                            labelText: 'Insert total budget for this Travel'),
-                        controller: maxAmountcontroller,
-                        onSubmitted: (_) => saveMaxamount(),
-                      ),
-                    ],
-                  ),
-                ),
-              )
-            : CupertinoPageScaffold(
-                navigationBar: appBar as ObstructingPreferredSizeWidget,
-                child: SafeArea(
-                  child: SingleChildScrollView(
-                    child: Container(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Center(
-                              child: Text(
-                                  'Welcome to Business Travel Tracker App! \n Please provide below the travel details \n or \n Please login to your previous trip using icon in the left corner of screen')),
-                          CupertinoTextField(
-                            keyboardType: TextInputType.number,
-                            placeholder: 'Insert your budget',
-                            controller: maxAmountcontroller,
-                            onSubmitted: (_) => saveMaxamount(),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ));
+        : WelcomePage(
+            insertNewRecord,
+            saveMaxamount,
+            showLogin,
+            maxAmountcontroller,
+          );
   }
 }

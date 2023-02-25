@@ -28,20 +28,20 @@ class ListofRecords extends StatelessWidget {
                     padding: const EdgeInsets.all(15.0),
                     child: Text(
                       records[index].amount.toStringAsFixed(2),
-                      style: TextStyle(fontSize: 15),
+                      style: const TextStyle(fontSize: 15),
                     ),
                   ),
                 ),
                 title: Text(
                   records[index].name,
-                  style: TextStyle(fontSize: 20),
+                  style: const TextStyle(fontSize: 20),
                 ),
                 subtitle: Text(
                   DateFormat.MMMMd().format(records[index].date),
-                  style: TextStyle(fontStyle: FontStyle.italic),
+                  style: const TextStyle(fontStyle: FontStyle.italic),
                 ),
                 trailing: IconButton(
-                  icon: Icon(Icons.delete),
+                  icon: const Icon(Icons.delete),
                   onPressed: () => deleteRecord(records[index].id),
                 ),
               ),
