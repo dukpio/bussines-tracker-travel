@@ -36,7 +36,7 @@ class _ChartSpaceState extends State<ChartSpace> {
     final mediaQuery = MediaQuery.of(context);
     return Platform.isAndroid
         ? Scaffold(
-            appBar: MyAppBar(widget.insertNewRecord, widget.showLogin),
+            appBar: MyAppBar(widget.insertNewRecord,),
             body: SafeArea(
               child: SingleChildScrollView(
                 child: Container(
@@ -63,7 +63,7 @@ class _ChartSpaceState extends State<ChartSpace> {
             ),
           )
         : CupertinoPageScaffold(
-            navigationBar: MyAppBar(widget.insertNewRecord, widget.showLogin)
+            navigationBar: MyAppBar(widget.insertNewRecord,)
                 as ObstructingPreferredSizeWidget,
             child: SafeArea(
               child: SingleChildScrollView(

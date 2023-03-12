@@ -1,13 +1,13 @@
 import 'dart:io';
 
+import 'package:business_travel_tracker/drawer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Function insertNewRecord;
-  final Function showLogin;
 
-  const MyAppBar(this.insertNewRecord, this.showLogin, {super.key});
+  const MyAppBar(this.insertNewRecord, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,20 +15,15 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
     return Platform.isIOS
         ? CupertinoNavigationBar(
+
             middle: const Text('Business Travel Tracker'),
             trailing: CupertinoButton(
               child: const Icon(CupertinoIcons.add),
               onPressed: () => insertNewRecord(context),
             ),
-            leading: CupertinoButton(
-              child: const Icon(CupertinoIcons.person_alt_circle_fill),
-              onPressed: () => showLogin(context),
-            ),
+            leading: const MyDrawer(),
           )
         : AppBar(
-            leading: IconButton(
-                onPressed: () => showLogin(context),
-                icon: const Icon(Icons.account_circle_sharp)),
             title: const Text('Business Travel Tracker'),
           );
   }

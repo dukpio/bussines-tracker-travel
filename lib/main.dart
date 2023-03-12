@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:business_travel_tracker/Chart/empty_list.dart';
 import 'package:business_travel_tracker/app_bar.dart';
+import 'package:business_travel_tracker/drawer.dart';
 import 'package:business_travel_tracker/new_record.dart';
 import 'package:business_travel_tracker/Chart/updated_list.dart';
 import 'package:business_travel_tracker/welcome_page.dart';
@@ -139,7 +140,8 @@ class MyHomePageState extends State<MyHomePage> {
     return maxAmount != 0
         ? Platform.isAndroid
             ? Scaffold(
-                appBar: MyAppBar(insertNewRecord, showLogin),
+                drawer: const MyDrawer(),
+                appBar: MyAppBar(insertNewRecord,),
                 body: SafeArea(
                   child: SingleChildScrollView(
                     child: Container(
@@ -171,7 +173,7 @@ class MyHomePageState extends State<MyHomePage> {
                 ),
               )
             : CupertinoPageScaffold(
-                navigationBar: MyAppBar(insertNewRecord, showLogin)
+                navigationBar: MyAppBar(insertNewRecord,)
                     as ObstructingPreferredSizeWidget,
                 child: SafeArea(
                   child: SingleChildScrollView(
