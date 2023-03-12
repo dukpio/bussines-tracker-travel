@@ -27,7 +27,7 @@ class _WelcomePageState extends State<WelcomePage> {
   Widget build(BuildContext context) {
     return Platform.isAndroid
         ? Scaffold(
-            appBar: MyAppBar(widget.insertNewRecord, widget.showLogin)
+            appBar: MyAppBar(widget.insertNewRecord,)
                 as PreferredSizeWidget,
             body: SafeArea(
               child: Column(
@@ -49,7 +49,7 @@ class _WelcomePageState extends State<WelcomePage> {
             ),
           )
         : CupertinoPageScaffold(
-            navigationBar: MyAppBar(widget.insertNewRecord, widget.showLogin)
+            navigationBar: MyAppBar(widget.insertNewRecord,)
                 as ObstructingPreferredSizeWidget,
             child: SafeArea(
               child: SingleChildScrollView(
