@@ -14,6 +14,11 @@ class MyDrawer extends StatelessWidget {
           leading: Icon(Icons.login),
           title: Text('Login to your profile'),
           onTap: null,
+        ),
+        ListTile(
+          leading: Icon(Icons.change_circle),
+          title: Text('Update details of travel' ),
+          onTap: null,
         )
         ],
       ),
