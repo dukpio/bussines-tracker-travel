@@ -15,13 +15,12 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
     return Platform.isIOS
         ? CupertinoNavigationBar(
-
             middle: const Text('Business Travel Tracker'),
             trailing: CupertinoButton(
               child: const Icon(CupertinoIcons.add),
               onPressed: () => insertNewRecord(context),
             ),
-            leading: const MyDrawer(),
+            // leading: const MyDrawer(),
           )
         : AppBar(
             title: const Text('Business Travel Tracker'),

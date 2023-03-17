@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'app_bar.dart';
+import '../app_bar.dart';
 
 class WelcomePage extends StatefulWidget {
   final Function insertNewRecord;

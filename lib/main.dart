@@ -1,16 +1,15 @@
 import 'dart:io';
 
 import 'package:business_travel_tracker/Chart/empty_list.dart';
+import 'package:business_travel_tracker/Chart/updated_list.dart';
 import 'package:business_travel_tracker/app_bar.dart';
 import 'package:business_travel_tracker/drawer.dart';
 import 'package:business_travel_tracker/new_record.dart';
-import 'package:business_travel_tracker/Chart/updated_list.dart';
-import 'package:business_travel_tracker/welcome_page.dart';
+import 'package:business_travel_tracker/screens/welcome_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'Chart/chart.dart';
-import 'list.dart';
 import 'models/record.dart';
 
 void main() {
@@ -141,7 +140,9 @@ class MyHomePageState extends State<MyHomePage> {
         ? Platform.isAndroid
             ? Scaffold(
                 drawer: const MyDrawer(),
-                appBar: MyAppBar(insertNewRecord,),
+                appBar: MyAppBar(
+                  insertNewRecord,
+                ),
                 body: SafeArea(
                   child: SingleChildScrollView(
                     child: Container(
@@ -172,31 +173,56 @@ class MyHomePageState extends State<MyHomePage> {
                   child: const Icon(Icons.add),
                 ),
               )
-            : CupertinoPageScaffold(
-                navigationBar: MyAppBar(insertNewRecord,)
-                    as ObstructingPreferredSizeWidget,
-                child: SafeArea(
-                  child: SingleChildScrollView(
-                    child: Container(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                              height: (mediaQuery.size.height -
-                                      60 -
-                                      mediaQuery.padding.top) *
-                                  0.4,
-                              child: Expanded(
-                                  child: Chart(amountSum(), maxAmount))),
-                          records.isEmpty
-                              ? EmptyPage(insertNewRecord)
-                              : UpdatedList(deleteTransaction, records),
-                        ],
-                      ),
+            : CupertinoTabScaffold(
+                tabBar: CupertinoTabBar(
+                  items: const [
+                    BottomNavigationBarItem(
+                      label: 'Login to your profile',
+                      icon: Icon(Icons.login),
                     ),
-                  ),
-                ))
+                    BottomNavigationBarItem(
+                      label: 'Update details of travel',
+                      icon: Icon(Icons.change_circle),
+                    ),
+                  ],
+                ),
+                tabBuilder: (BuildContext context, int index) {
+                  return CupertinoTabView(
+                    builder: (BuildContext context) {
+                      return CupertinoPageScaffold(
+                        navigationBar: MyAppBar(
+                          insertNewRecord,
+                        ) as ObstructingPreferredSizeWidget,
+                        child: SafeArea(
+                          child: SingleChildScrollView(
+                            child: Container(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    height: (mediaQuery.size.height -
+                                            60 -
+                                            mediaQuery.padding.top) *
+                                        0.4,
+                                    child: Expanded(
+                                      child: Chart(amountSum(), maxAmount),
+                                    ),
+                                  ),
+                                  records.isEmpty
+                                      ? EmptyPage(insertNewRecord)
+                                      : UpdatedList(deleteTransaction, records),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
+              )
         : WelcomePage(
             insertNewRecord,
             saveMaxamount,
