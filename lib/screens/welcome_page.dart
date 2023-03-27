@@ -22,13 +22,18 @@ class WelcomePage extends StatefulWidget {
   State<WelcomePage> createState() => _WelcomePageState();
 }
 
+void selectCategory(BuildContext context) {
+  Navigator.of(context).pushNamed('/main_page'); //ale moze tez byc nazwa route
+}
+
 class _WelcomePageState extends State<WelcomePage> {
   @override
   Widget build(BuildContext context) {
     return Platform.isAndroid
         ? Scaffold(
-            appBar: MyAppBar(widget.insertNewRecord,)
-                as PreferredSizeWidget,
+            appBar: MyAppBar(
+              widget.insertNewRecord,
+            ) as PreferredSizeWidget,
             body: SafeArea(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -44,13 +49,20 @@ class _WelcomePageState extends State<WelcomePage> {
                     controller: widget.maxAmountcontroller,
                     onSubmitted: (_) => widget.saveMaxamount(),
                   ),
+                  ElevatedButton(
+                      onPressed: () => selectCategory(context),
+                      child: Text('Go to tracker!')),
                 ],
               ),
             ),
           )
         : CupertinoPageScaffold(
-            navigationBar: MyAppBar(widget.insertNewRecord,)
-                as ObstructingPreferredSizeWidget,
+            navigationBar: CupertinoNavigationBar(
+                middle: const Text('Business Travel Tracker'),
+                trailing: CupertinoButton(
+                  child: const Icon(CupertinoIcons.add),
+                  onPressed: null,
+                )),
             child: SafeArea(
               child: SingleChildScrollView(
                 child: Container(
