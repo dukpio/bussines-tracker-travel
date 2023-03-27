@@ -3,11 +3,10 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../app_bar.dart';
+import '../models/record.dart';
 import 'chart.dart';
 import 'empty_list.dart';
 import 'updated_list.dart';
-import '../models/record.dart';
 
 class ChartSpace extends StatefulWidget {
   final List<Record> records;
@@ -36,7 +35,9 @@ class _ChartSpaceState extends State<ChartSpace> {
     final mediaQuery = MediaQuery.of(context);
     return Platform.isAndroid
         ? Scaffold(
-            appBar: MyAppBar(widget.insertNewRecord,),
+            appBar: AppBar(
+              title: const Text('Business Travel Tracker'),
+            ),
             body: SafeArea(
               child: SingleChildScrollView(
                 child: Container(
@@ -63,8 +64,12 @@ class _ChartSpaceState extends State<ChartSpace> {
             ),
           )
         : CupertinoPageScaffold(
-            navigationBar: MyAppBar(widget.insertNewRecord,)
-                as ObstructingPreferredSizeWidget,
+            navigationBar: CupertinoNavigationBar(
+                middle: const Text('Business Travel Tracker'),
+                trailing: CupertinoButton(
+                  child: const Icon(CupertinoIcons.add),
+                  onPressed: null,
+                )),
             child: SafeArea(
               child: SingleChildScrollView(
                 child: Container(

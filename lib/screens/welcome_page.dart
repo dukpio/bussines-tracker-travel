@@ -1,9 +1,9 @@
 import 'dart:io';
 
+import 'package:business_travel_tracker/appBar/app_bar_Material.dart';
+import 'package:business_travel_tracker/appBar/app_bar_ios.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../app_bar.dart';
 
 class WelcomePage extends StatefulWidget {
   final Function insertNewRecord;
@@ -31,9 +31,7 @@ class _WelcomePageState extends State<WelcomePage> {
   Widget build(BuildContext context) {
     return Platform.isAndroid
         ? Scaffold(
-            appBar: MyAppBar(
-              widget.insertNewRecord,
-            ) as PreferredSizeWidget,
+            appBar: MyAppBarMaterial(),
             body: SafeArea(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -57,12 +55,7 @@ class _WelcomePageState extends State<WelcomePage> {
             ),
           )
         : CupertinoPageScaffold(
-            navigationBar: CupertinoNavigationBar(
-                middle: const Text('Business Travel Tracker'),
-                trailing: CupertinoButton(
-                  child: const Icon(CupertinoIcons.add),
-                  onPressed: null,
-                )),
+            navigationBar: MyAppBarIos(widget.insertNewRecord),
             child: SafeArea(
               child: SingleChildScrollView(
                 child: Container(
@@ -79,6 +72,9 @@ class _WelcomePageState extends State<WelcomePage> {
                         controller: widget.maxAmountcontroller,
                         onSubmitted: (_) => widget.saveMaxamount(),
                       ),
+                      CupertinoButton(
+                          onPressed: () => selectCategory(context),
+                          child: Text('Go to tracker!')),
                     ],
                   ),
                 ),
