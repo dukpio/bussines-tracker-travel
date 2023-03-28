@@ -70,7 +70,7 @@ class _WelcomePageState extends State<WelcomePage> {
                         ),
                       ),
                       controller: maxAmountController,
-                      onSubmitted: (_) => saveMaxAmount(),
+                      onChanged: (_) => saveMaxAmount(),
                     ),
                     ElevatedButton(
                         onPressed: () => pushMain(context),
@@ -111,7 +111,7 @@ class _WelcomePageState extends State<WelcomePage> {
                         keyboardType: TextInputType.number,
                         placeholder: 'Insert your budget',
                         controller: maxAmountController,
-                        onSubmitted: (_) => saveMaxAmount(),
+                        onChanged: (_) => saveMaxAmount(),
                       ),
                       CupertinoButton(
                           onPressed: () => pushMain(context),

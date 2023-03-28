@@ -57,8 +57,8 @@ class MyHomePageState extends State<MainPage> {
 
     return Platform.isAndroid
         ? Scaffold(
-            drawer: MyDrawer(),
-            appBar: MyAppBarMaterial(),
+            drawer: const MyDrawer(),
+            appBar: const MyAppBarMaterial(),
             body: SafeArea(
               child: SingleChildScrollView(
                 child: Container(

@@ -68,18 +68,6 @@ class _MyAppState extends State<MyApp> {
 
   final List<Record> records = [];
 
-  void showLogin(BuildContext context) {
-    showMenu(
-        context: context,
-        position: RelativeRect.fromLTRB(0, 0, 0, 0),
-        items: [
-          PopupMenuItem<int>(
-            value: 0,
-            child: Text('Log in'),
-          ),
-        ]);
-  }
-
   double maxAmount = 0;
   final maxAmountcontroller = TextEditingController();
 
@@ -125,8 +113,6 @@ class _MyAppState extends State<MyApp> {
                 builder: (context) => WelcomePage(maxAmount),
               );
             },
-
-            // home: MyHomePage(title: 'Business Travel Tracker'),
           )
         : MaterialApp(
             debugShowCheckedModeBanner: false,
@@ -137,11 +123,9 @@ class _MyAppState extends State<MyApp> {
               appBarTheme: AppBarTheme(centerTitle: true),
               fontFamily: 'Garute',
             ),
-            // home: MyHomePage(title: 'Business Travel Tracker'),
             routes: routes,
             onGenerateRoute: (settings) {
               print(settings.arguments);
-
               return MaterialPageRoute(
                 builder: (context) => WelcomePage(maxAmount),
               );
