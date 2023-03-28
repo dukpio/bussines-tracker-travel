@@ -103,9 +103,8 @@ class _MyAppState extends State<MyApp> {
           insertNewRecord: insertNewRecord,
           deleteTransaction: deleteTransaction,
           amountSum: amountSum,
-          maxAmount: maxAmount,
           maxAmountcontroller: maxAmountcontroller,
-          saveMaxamount: saveMaxamount)
+          saveMaxAmount: saveMaxamount)
     };
     final routesArguments = ModalRoute.of(context)?.settings.arguments,
         isIOS = Platform.isIOS;

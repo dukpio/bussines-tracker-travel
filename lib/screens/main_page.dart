@@ -19,9 +19,8 @@ class MainPage extends StatefulWidget {
     required this.insertNewRecord,
     required this.deleteTransaction,
     required this.amountSum,
-    required this.maxAmount,
     required this.maxAmountcontroller,
-    required this.saveMaxamount,
+    required this.saveMaxAmount,
   }) : super(key: key);
 
   final String title;
@@ -36,11 +35,9 @@ class MainPage extends StatefulWidget {
 
   final Function amountSum;
 
-  late double maxAmount;
-
   final TextEditingController maxAmountcontroller;
 
-  final Function saveMaxamount;
+  final Function saveMaxAmount;
 
   @override
   State<MainPage> createState() => MyHomePageState();
