@@ -106,9 +106,7 @@ class _MyAppState extends State<MyApp> {
           maxAmountcontroller: maxAmountcontroller,
           saveMaxAmount: saveMaxamount)
     };
-    final routesArguments = ModalRoute.of(context)?.settings.arguments,
-        isIOS = Platform.isIOS;
-    return isIOS
+    return Platform.isIOS
         ? CupertinoApp(
             localizationsDelegates: [
               DefaultMaterialLocalizations.delegate,
