@@ -25,28 +25,26 @@ class Chart extends StatelessWidget {
         child: sum < maxAmount
             ? Container(
                 alignment: Alignment.center,
-                child: Expanded(
-                  child: SfCircularChart(
-                      title: ChartTitle(
-                          text: 'Total budget: ' +
-                              maxAmount.toString() +
-                              '\nCurrent status: ' +
-                              sum.toStringAsFixed(2) +
-                              '/' +
-                              maxAmount.toStringAsFixed(2),
-                          textStyle:
-                              const TextStyle(fontStyle: FontStyle.italic)),
-                      series: <CircularSeries>[
-                        PieSeries<ChartData, String>(
-                            onPointTap: (ChartPointDetails details) {},
-                            dataSource: chartData,
-                            xValueMapper: (ChartData data, _) => data.x,
-                            yValueMapper: (ChartData data, _) => data.y,
-                            explode: true,
-                            explodeIndex: 1,
-                            radius: '85%')
-                      ]),
-                ),
+                child: SfCircularChart(
+                    title: ChartTitle(
+                        text: 'Total budget: ' +
+                            maxAmount.toString() +
+                            '\nCurrent status: ' +
+                            sum.toStringAsFixed(2) +
+                            '/' +
+                            maxAmount.toStringAsFixed(2),
+                        textStyle:
+                            const TextStyle(fontStyle: FontStyle.italic)),
+                    series: <CircularSeries>[
+                      PieSeries<ChartData, String>(
+                          onPointTap: (ChartPointDetails details) {},
+                          dataSource: chartData,
+                          xValueMapper: (ChartData data, _) => data.x,
+                          yValueMapper: (ChartData data, _) => data.y,
+                          explode: true,
+                          explodeIndex: 1,
+                          radius: '85%')
+                    ]),
               )
             : Card(
                 color: Colors.amber,

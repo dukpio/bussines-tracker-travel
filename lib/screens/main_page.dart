@@ -74,8 +74,7 @@ class MyHomePageState extends State<MainPage> {
                                   60 -
                                   mediaQuery.padding.top) *
                               0.4,
-                          child: Expanded(
-                              child: Chart(widget.amountSum(), maxAmount!))),
+                          child: Chart(widget.amountSum(), maxAmount!)),
                       records.isEmpty
                           ? EmptyPage(widget.insertNewRecord)
                           : UpdatedList(widget.deleteTransaction, records),
@@ -109,10 +108,10 @@ class MyHomePageState extends State<MainPage> {
               return CupertinoTabView(
                 builder: (BuildContext context) {
                   return CupertinoPageScaffold(
-                    navigationBar: CupertinoNavigationBar(
-                        middle: const Text('Business Travel Tracker'),
+                    navigationBar: const CupertinoNavigationBar(
+                        middle: Text('Business Travel Tracker'),
                         trailing: CupertinoButton(
-                          child: const Icon(CupertinoIcons.add),
+                          child: Icon(CupertinoIcons.add),
                           onPressed: null,
                         )),
                     child: SafeArea(
@@ -127,9 +126,7 @@ class MyHomePageState extends State<MainPage> {
                                         60 -
                                         mediaQuery.padding.top) *
                                     0.4,
-                                child: Expanded(
-                                  child: Chart(widget.amountSum(), maxAmount!),
-                                ),
+                                child: Chart(widget.amountSum(), maxAmount!),
                               ),
                               widget.records.isEmpty
                                   ? EmptyPage(widget.insertNewRecord)
