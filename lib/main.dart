@@ -96,15 +96,13 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     final routes = {
-      '/': (context) => WelcomePage(
-          insertNewRecord, saveMaxamount, showLogin, maxAmountcontroller),
+      '/': (context) => WelcomePage(maxAmount),
       '/main_page': (context) => MainPage(
           title: 'Business Travel Tracker',
           addNewRecord: addNewRecord,
           insertNewRecord: insertNewRecord,
           deleteTransaction: deleteTransaction,
           amountSum: amountSum,
-          showLogin: showLogin,
           maxAmount: maxAmount,
           maxAmountcontroller: maxAmountcontroller,
           saveMaxamount: saveMaxamount)
@@ -122,14 +120,12 @@ class _MyAppState extends State<MyApp> {
               print(settings.arguments);
 
               return MaterialPageRoute(
-                builder: (context) => WelcomePage(insertNewRecord,
-                    saveMaxamount, showLogin, maxAmountcontroller),
+                builder: (context) => WelcomePage(maxAmount),
               );
             },
             onUnknownRoute: (settings) {
               return MaterialPageRoute(
-                builder: (context) => WelcomePage(insertNewRecord,
-                    saveMaxamount, showLogin, maxAmountcontroller),
+                builder: (context) => WelcomePage(maxAmount),
               );
             },
 
@@ -150,14 +146,12 @@ class _MyAppState extends State<MyApp> {
               print(settings.arguments);
 
               return MaterialPageRoute(
-                builder: (context) => WelcomePage(insertNewRecord,
-                    saveMaxamount, showLogin, maxAmountcontroller),
+                builder: (context) => WelcomePage(maxAmount),
               );
             },
             onUnknownRoute: (settings) {
               return MaterialPageRoute(
-                builder: (context) => WelcomePage(insertNewRecord,
-                    saveMaxamount, showLogin, maxAmountcontroller),
+                builder: (context) => WelcomePage(maxAmount),
               );
             },
           );

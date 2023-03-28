@@ -19,7 +19,6 @@ class MainPage extends StatefulWidget {
     required this.insertNewRecord,
     required this.deleteTransaction,
     required this.amountSum,
-    required this.showLogin,
     required this.maxAmount,
     required this.maxAmountcontroller,
     required this.saveMaxamount,
@@ -37,8 +36,6 @@ class MainPage extends StatefulWidget {
 
   final Function amountSum;
 
-  final Function showLogin;
-
   late double maxAmount;
 
   final TextEditingController maxAmountcontroller;
@@ -52,7 +49,14 @@ class MainPage extends StatefulWidget {
 class MyHomePageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
+    final args =
+        ModalRoute.of(context)!.settings.arguments as Map<String, double>;
+
+    double? maxAmount = args['maxAmount'];
+
     final mediaQuery = MediaQuery.of(context);
+
+    final List<Record> records = [];
 
     return Platform.isAndroid
         ? Scaffold(
@@ -71,12 +75,10 @@ class MyHomePageState extends State<MainPage> {
                                   mediaQuery.padding.top) *
                               0.4,
                           child: Expanded(
-                              child:
-                                  Chart(widget.amountSum(), widget.maxAmount))),
-                      widget.records.isEmpty
+                              child: Chart(widget.amountSum(), maxAmount!))),
+                      records.isEmpty
                           ? EmptyPage(widget.insertNewRecord)
-                          : UpdatedList(
-                              widget.deleteTransaction, widget.records),
+                          : UpdatedList(widget.deleteTransaction, records),
                     ],
                   ),
                 ),
@@ -92,7 +94,7 @@ class MyHomePageState extends State<MainPage> {
           )
         : CupertinoTabScaffold(
             tabBar: CupertinoTabBar(
-              items: [
+              items: const [
                 BottomNavigationBarItem(
                   label: 'Login to your profile',
                   icon: Icon(Icons.login),
@@ -126,8 +128,7 @@ class MyHomePageState extends State<MainPage> {
                                         mediaQuery.padding.top) *
                                     0.4,
                                 child: Expanded(
-                                  child: Chart(
-                                      widget.amountSum(), widget.maxAmount),
+                                  child: Chart(widget.amountSum(), maxAmount!),
                                 ),
                               ),
                               widget.records.isEmpty
