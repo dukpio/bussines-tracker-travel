@@ -85,39 +85,41 @@ class _WelcomePageState extends State<WelcomePage> {
               middle: Text('Business Travel Tracker'),
             ),
             child: SafeArea(
-              child: SingleChildScrollView(
-                child: Container(
-                  padding: const EdgeInsets.all(15),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      const Center(
-                        child: Text(
-                          'Let\'s start your next trip!',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 30),
-                        ),
+              child: Container(
+                padding: const EdgeInsets.all(15),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    const Center(
+                      child: Text(
+                        'Let\'s start your next trip!',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 30),
                       ),
-                      const Center(
-                        child: Text(
-                          'Please enter below your budget.',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 20),
-                        ),
+                    ),
+                    const Center(
+                      child: Text(
+                        'Please enter below your budget.',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 20),
                       ),
-                      CupertinoTextField(
-                        textAlignVertical: TextAlignVertical.center,
-                        keyboardType: TextInputType.number,
-                        placeholder: 'Insert your budget',
-                        controller: maxAmountController,
-                        onChanged: (_) => saveMaxAmount(),
-                      ),
-                      CupertinoButton(
-                          onPressed: () => pushMain(context),
-                          child: const Text('Go to tracker!')),
-                    ],
-                  ),
+                    ),
+                    CupertinoTextField(
+                      textAlignVertical: TextAlignVertical.center,
+                      keyboardType: TextInputType.number,
+                      placeholder: 'Insert your budget',
+                      controller: maxAmountController,
+                      onChanged: (_) => saveMaxAmount(),
+                    ),
+                    CupertinoButton.filled(
+                        borderRadius: BorderRadius.circular(15),
+                        onPressed: () => pushMain(context),
+                        child: const Text(
+                          'Go to tracker!',
+                          style: TextStyle(color: Colors.white),
+                        )),
+                  ],
                 ),
               ),
             ));
