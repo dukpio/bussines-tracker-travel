@@ -5,6 +5,9 @@ import 'package:business_travel_tracker/screens/welcome_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'models/record.dart';
+import 'new_record.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -17,54 +20,54 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // void addNewRecord(
-  //   String name,
-  //   double amount,
-  //   DateTime date,
-  // ) {
-  //   final record = Record(
-  //     name: name,
-  //     amount: amount,
-  //     date: date,
-  //     id: DateTime.now().toString(),
-  //   );
-  //   setState(() {
-  //     records.add(record);
-  //   });
-  // }
-  //
-  // void insertNewRecord(BuildContext context) {
-  //   showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return GestureDetector(
-  //         onTap: () {},
-  //         behavior: HitTestBehavior.opaque,
-  //         child: NewRecord(addNewRecord),
-  //       );
-  //     },
-  //   );
-  // }
-  //
-  // void deleteTransaction(String id) {
-  //   setState(() {
-  //     records.removeWhere((text) {
-  //       return text.id == id;
-  //     });
-  //   });
-  // }
-  //
-  // double amountSum() {
-  //   if (records.isEmpty) {
-  //     return 0;
-  //   }
-  //   return records
-  //       .map((record) => record.amount)
-  //       .reduce((value, element) => value + element);
-  // }
-  //
-  // final List<Record> records = [];
-  //
+  void addNewRecord(
+    String name,
+    double amount,
+    DateTime date,
+  ) {
+    final record = Record(
+      name: name,
+      amount: amount,
+      date: date,
+      id: DateTime.now().toString(),
+    );
+    setState(() {
+      records.add(record);
+    });
+  }
+
+  void insertNewRecord(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return GestureDetector(
+          onTap: () {},
+          behavior: HitTestBehavior.opaque,
+          child: NewRecord(addNewRecord),
+        );
+      },
+    );
+  }
+
+  void deleteTransaction(String id) {
+    setState(() {
+      records.removeWhere((text) {
+        return text.id == id;
+      });
+    });
+  }
+
+  double amountSum() {
+    if (records.isEmpty) {
+      return 0;
+    }
+    return records
+        .map((record) => record.amount)
+        .reduce((value, element) => value + element);
+  }
+
+  final List<Record> records = [];
+
   double maxAmount = 0;
   // final maxAmountcontroller = TextEditingController();
   //
@@ -83,7 +86,11 @@ class _MyAppState extends State<MyApp> {
     final routes = {
       '/': (context) => WelcomePage(maxAmount),
       '/main_page': (context) => MainPage(
+            amountSum: amountSum,
+            insertNewRecord: insertNewRecord,
             title: 'Business Travel Tracker',
+            deleteTransaction: deleteTransaction,
+            records: records,
           )
     };
     return Platform.isIOS
