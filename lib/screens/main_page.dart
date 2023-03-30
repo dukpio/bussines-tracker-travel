@@ -9,41 +9,16 @@ import 'package:flutter/material.dart';
 import '../Chart/chart.dart';
 import '../drawer.dart';
 import '../models/record.dart';
+import '../new_record.dart';
 
 class MainPage extends StatefulWidget {
   static const routeName = '/main_page';
   MainPage({
     Key? key,
     required this.title,
-    required this.addNewRecord,
-    required this.insertNewRecord,
-    required this.deleteTransaction,
-    required this.amountSum,
-    required this.showLogin,
-    required this.maxAmount,
-    required this.maxAmountcontroller,
-    required this.saveMaxamount,
   }) : super(key: key);
 
   final String title;
-
-  final List<Record> records = [];
-
-  final Function addNewRecord;
-
-  final Function insertNewRecord;
-
-  final Function deleteTransaction;
-
-  final Function amountSum;
-
-  final Function showLogin;
-
-  late double maxAmount;
-
-  final TextEditingController maxAmountcontroller;
-
-  final Function saveMaxamount;
 
   @override
   State<MainPage> createState() => MyHomePageState();
@@ -52,12 +27,72 @@ class MainPage extends StatefulWidget {
 class MyHomePageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
+    void pushWelcome(BuildContext context) {
+      Navigator.of(context).pushNamed('/');
+    }
+
+    final args =
+        ModalRoute.of(context)!.settings.arguments as Map<String, double>;
+
+    double? maxAmount = args['maxAmount'];
+
     final mediaQuery = MediaQuery.of(context);
+
+    final List<Record> records = [
+      Record(amount: 10, date: DateTime.now(), id: 'cos', name: 'cos'),
+    ];
+
+    double amountSum() {
+      if (records.isEmpty) {
+        return 0;
+      }
+      return records
+          .map((record) => record.amount)
+          .reduce((value, element) => value + element);
+    }
+
+    void addNewRecord(
+      String name,
+      double amount,
+      DateTime date,
+    ) {
+      final record = Record(
+        name: name,
+        amount: amount,
+        date: date,
+        id: DateTime.now().toString(),
+      );
+      setState(() {
+        records.add(record);
+        print(records.length);
+      });
+    }
+
+    void insertNewRecord(BuildContext context) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return GestureDetector(
+            onTap: () {},
+            behavior: HitTestBehavior.opaque,
+            child: NewRecord(addNewRecord),
+          );
+        },
+      );
+    }
+
+    void deleteTransaction(String id) {
+      setState(() {
+        records.removeWhere((text) {
+          return text.id == id;
+        });
+      });
+    }
 
     return Platform.isAndroid
         ? Scaffold(
-            drawer: MyDrawer(),
-            appBar: MyAppBarMaterial(),
+            drawer: const MyDrawer(),
+            appBar: const MyAppBarMaterial(),
             body: SafeArea(
               child: SingleChildScrollView(
                 child: Container(
@@ -70,13 +105,10 @@ class MyHomePageState extends State<MainPage> {
                                   60 -
                                   mediaQuery.padding.top) *
                               0.4,
-                          child: Expanded(
-                              child:
-                                  Chart(widget.amountSum(), widget.maxAmount))),
-                      widget.records.isEmpty
-                          ? EmptyPage(widget.insertNewRecord)
-                          : UpdatedList(
-                              widget.deleteTransaction, widget.records),
+                          child: Chart(amountSum(), maxAmount!)),
+                      records.isEmpty
+                          ? EmptyPage(insertNewRecord)
+                          : UpdatedList(deleteTransaction, records),
                     ],
                   ),
                 ),
@@ -86,13 +118,13 @@ class MyHomePageState extends State<MainPage> {
                 FloatingActionButtonLocation.centerFloat,
             floatingActionButton: FloatingActionButton(
               tooltip: 'Add new record',
-              onPressed: () => widget.insertNewRecord(context),
+              onPressed: () => insertNewRecord(context),
               child: const Icon(Icons.add),
             ),
           )
         : CupertinoTabScaffold(
             tabBar: CupertinoTabBar(
-              items: [
+              items: const [
                 BottomNavigationBarItem(
                   label: 'Login to your profile',
                   icon: Icon(Icons.login),
@@ -102,15 +134,16 @@ class MyHomePageState extends State<MainPage> {
                   icon: Icon(Icons.change_circle),
                 ),
               ],
+              onTap: null, //DO UZUPELNIANIA!
             ),
             tabBuilder: (BuildContext context, int index) {
               return CupertinoTabView(
                 builder: (BuildContext context) {
                   return CupertinoPageScaffold(
-                    navigationBar: CupertinoNavigationBar(
-                        middle: const Text('Business Travel Tracker'),
+                    navigationBar: const CupertinoNavigationBar(
+                        middle: Text('Business Travel Tracker'),
                         trailing: CupertinoButton(
-                          child: const Icon(CupertinoIcons.add),
+                          child: Icon(CupertinoIcons.add),
                           onPressed: null,
                         )),
                     child: SafeArea(
@@ -125,15 +158,11 @@ class MyHomePageState extends State<MainPage> {
                                         60 -
                                         mediaQuery.padding.top) *
                                     0.4,
-                                child: Expanded(
-                                  child: Chart(
-                                      widget.amountSum(), widget.maxAmount),
-                                ),
+                                child: Chart(amountSum(), maxAmount!),
                               ),
-                              widget.records.isEmpty
-                                  ? EmptyPage(widget.insertNewRecord)
-                                  : UpdatedList(
-                                      widget.deleteTransaction, widget.records),
+                              records.isEmpty
+                                  ? EmptyPage(insertNewRecord)
+                                  : UpdatedList(deleteTransaction, records),
                             ],
                           ),
                         ),
@@ -144,11 +173,5 @@ class MyHomePageState extends State<MainPage> {
               );
             },
           );
-    // : WelcomePage(
-    //     widget.insertNewRecord,
-    //     widget.saveMaxamount,
-    //     widget.showLogin,
-    //     widget.maxAmountcontroller,
-    //   );
   }
 }

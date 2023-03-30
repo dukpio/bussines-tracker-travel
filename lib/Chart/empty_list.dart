@@ -22,12 +22,12 @@ class _EmptyPageState extends State<EmptyPage> {
             height:
                 (mediaQuery.size.height - 60 - mediaQuery.padding.top) * 0.6,
             child: Platform.isAndroid
-                ? Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                          'Please insert your first record\nTo do this, please use the button below.'),
-                    ],
+                ? const Center(
+                    child: Text(
+                      'Please insert your first record, by using the button below.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 20),
+                    ),
                   )
                 : Column(
                     mainAxisAlignment: MainAxisAlignment.center,
