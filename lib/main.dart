@@ -1,12 +1,13 @@
 import 'dart:io';
 
+import 'package:business_travel_tracker/new_rec/new_record_ios.dart';
 import 'package:business_travel_tracker/screens/main_page.dart';
 import 'package:business_travel_tracker/screens/welcome_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'models/record.dart';
-import 'new_record.dart';
+import 'new_rec/new_record_material.dart';
 
 void main() {
   runApp(const MyApp());
@@ -49,6 +50,19 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
+  void insertNewRecordIOs(BuildContext context) {
+    showCupertinoDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return GestureDetector(
+          onTap: () {},
+          behavior: HitTestBehavior.opaque,
+          child: NewRecordIos(addNewRecord),
+        );
+      },
+    );
+  }
+
   void deleteTransaction(String id) {
     setState(() {
       records.removeWhere((text) {
@@ -69,17 +83,6 @@ class _MyAppState extends State<MyApp> {
   final List<Record> records = [];
 
   double maxAmount = 0;
-  // final maxAmountcontroller = TextEditingController();
-  //
-  // void saveMaxamount() {
-  //   if (maxAmountcontroller.text.isEmpty) {
-  //     return;
-  //   } else {
-  //     setState(() {
-  //       maxAmount = double.parse(maxAmountcontroller.text);
-  //     });
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -88,6 +91,7 @@ class _MyAppState extends State<MyApp> {
       '/main_page': (context) => MainPage(
             amountSum: amountSum,
             insertNewRecord: insertNewRecord,
+            insertNewRecordIOs: insertNewRecordIOs,
             title: 'Business Travel Tracker',
             deleteTransaction: deleteTransaction,
             records: records,
