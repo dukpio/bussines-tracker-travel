@@ -57,23 +57,20 @@ class MyHomePageState extends State<MainPage> {
             appBar: const MyAppBarMaterial(),
             body: SafeArea(
               child: SingleChildScrollView(
-                child: Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                          height: (mediaQuery.size.height -
-                                  60 -
-                                  mediaQuery.padding.top) *
-                              0.4,
-                          child: Chart(widget.amountSum(), maxAmount!)),
-                      widget.records.isEmpty
-                          ? EmptyPage(widget.insertNewRecord)
-                          : UpdatedList(
-                              widget.deleteTransaction, widget.records),
-                    ],
-                  ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                        height: (mediaQuery.size.height -
+                                60 -
+                                mediaQuery.padding.top) *
+                            0.4,
+                        child: Chart(widget.amountSum(), maxAmount!)),
+                    widget.records.isEmpty
+                        ? EmptyPage(widget.insertNewRecord)
+                        : UpdatedList(widget.deleteTransaction, widget.records),
+                  ],
                 ),
               ),
             ),
@@ -85,52 +82,31 @@ class MyHomePageState extends State<MainPage> {
               child: const Icon(Icons.add),
             ),
           )
-        : CupertinoTabScaffold(
-            tabBar: CupertinoTabBar(
-              items: const [
-                BottomNavigationBarItem(
-                  label: 'Login to your profile',
-                  icon: Icon(Icons.login),
-                ),
-                BottomNavigationBarItem(
-                  label: 'Update details of travel',
-                  icon: Icon(Icons.change_circle),
-                ),
-              ],
-              onTap: null, //DO UZUPELNIANIA!
-            ),
-            tabBuilder: (BuildContext context, int index) {
-              return CupertinoTabView(
-                builder: (BuildContext context) {
-                  return CupertinoPageScaffold(
-                    navigationBar: MyAppBarIos(widget.insertNewRecord),
-                    child: SafeArea(
-                      child: SingleChildScrollView(
-                        child: Container(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                height: (mediaQuery.size.height -
-                                        60 -
-                                        mediaQuery.padding.top) *
-                                    0.4,
-                                child: Chart(widget.amountSum(), maxAmount!),
-                              ),
-                              widget.records.isEmpty
-                                  ? EmptyPage(widget.insertNewRecord)
-                                  : UpdatedList(
-                                      widget.deleteTransaction, widget.records),
-                            ],
-                          ),
-                        ),
+        : CupertinoPageScaffold(
+            navigationBar: MyAppBarIos(widget.insertNewRecord),
+            child: SafeArea(
+              child: SingleChildScrollView(
+                child: Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        height: (mediaQuery.size.height -
+                                60 -
+                                mediaQuery.padding.top) *
+                            0.4,
+                        child: Chart(widget.amountSum(), maxAmount!),
                       ),
-                    ),
-                  );
-                },
-              );
-            },
+                      widget.records.isEmpty
+                          ? EmptyPage(widget.insertNewRecord)
+                          : UpdatedList(
+                              widget.deleteTransaction, widget.records),
+                    ],
+                  ),
+                ),
+              ),
+            ),
           );
   }
 }

@@ -95,14 +95,14 @@ class _MyAppState extends State<MyApp> {
     };
     return Platform.isIOS
         ? CupertinoApp(
-            localizationsDelegates: [
+            localizationsDelegates: const [
               DefaultMaterialLocalizations.delegate,
             ],
+            theme: const CupertinoThemeData(primaryColor: Colors.blueGrey),
             title: 'Business Travel Tracker',
             routes: routes,
             onGenerateRoute: (settings) {
               print(settings.arguments);
-
               return MaterialPageRoute(
                 builder: (context) => WelcomePage(maxAmount),
               );
@@ -117,9 +117,9 @@ class _MyAppState extends State<MyApp> {
             debugShowCheckedModeBanner: false,
             title: 'Business Travel Tracker',
             theme: ThemeData(
-              backgroundColor: Color.fromARGB(255, 195, 231, 228),
+              backgroundColor: const Color.fromARGB(255, 195, 231, 228),
               primarySwatch: Colors.blueGrey,
-              appBarTheme: AppBarTheme(centerTitle: true),
+              appBarTheme: const AppBarTheme(centerTitle: true),
               fontFamily: 'Garute',
             ),
             routes: routes,
