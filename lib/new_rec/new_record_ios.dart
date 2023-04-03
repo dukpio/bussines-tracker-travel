@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 
 class NewRecordIos extends StatefulWidget {
   final Function addText;
+
   NewRecordIos(this.addText);
 
   @override
@@ -20,29 +21,20 @@ class _NewRecordIosState extends State<NewRecordIos> {
     showCupertinoModalPopup(
         context: context,
         builder: (BuildContext builder) {
-          return Container(
+          return SizedBox(
             height: MediaQuery.of(context).copyWith().size.height * 0.25,
-            color: Colors.white,
-            child: Column(
-              children: [
-                CupertinoDatePicker(
-                  mode: CupertinoDatePickerMode.date,
-                  onDateTimeChanged: (DateTime markedDate) {
-                    setState(() {
-                      selectedDate = markedDate;
-                      selectedDateString =
-                          DateFormat.MMMMd().format(markedDate);
-                    });
-                  },
-                  initialDateTime: DateTime.now(),
-                  minimumDate: DateTime(2021, 1, 1, 00, 00),
-                  maximumDate: DateTime.now(),
-                ),
-                CupertinoButton(
-                  child: const Text('Close'),
-                  onPressed: () => Navigator.of(context).pop(),
-                )
-              ],
+            child: CupertinoDatePicker(
+              backgroundColor: Colors.white54,
+              mode: CupertinoDatePickerMode.date,
+              onDateTimeChanged: (DateTime markedDate) {
+                setState(() {
+                  selectedDate = markedDate;
+                  selectedDateString = DateFormat.MMMMd().format(markedDate);
+                });
+              },
+              initialDateTime: DateTime.now(),
+              minimumDate: DateTime(2021, 1, 1, 00, 00),
+              maximumDate: DateTime.now(),
             ),
           );
         });
@@ -74,28 +66,34 @@ class _NewRecordIosState extends State<NewRecordIos> {
   Widget build(BuildContext context) {
     return CupertinoAlertDialog(
       title: const Text('New Record'),
-      content: Card(
-        elevation: 0.0,
-        child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextField(
-                decoration: const InputDecoration(labelText: 'Insert name'),
-                controller: nameController,
-                onSubmitted: (_) => _saveData(),
+      content: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextField(
+              decoration: const InputDecoration(
+                labelText: 'Insert name',
+                labelStyle: TextStyle(color: Colors.blueGrey),
               ),
-              TextField(
-                keyboardType: TextInputType.number,
-                controller: amountController,
-                decoration: const InputDecoration(labelText: 'Insert amount'),
-                onSubmitted: (_) => _saveData(),
+              controller: nameController,
+              onSubmitted: (_) => _saveData(),
+            ),
+            TextField(
+              keyboardType: TextInputType.number,
+              controller: amountController,
+              decoration: const InputDecoration(
+                labelText: 'Insert amount',
+                labelStyle: TextStyle(color: Colors.blueGrey),
               ),
-              CupertinoButton(
-                  onPressed: presentDate,
-                  child: Text(elevatedDateSelectionButton())),
-            ]),
-      ),
+              onSubmitted: (_) => _saveData(),
+            ),
+            CupertinoButton(
+                onPressed: presentDate,
+                child: Text(
+                  elevatedDateSelectionButton(),
+                  style: const TextStyle(color: Colors.blueGrey),
+                )),
+          ]),
       actions: <CupertinoDialogAction>[
         CupertinoDialogAction(
           isDefaultAction: true,
