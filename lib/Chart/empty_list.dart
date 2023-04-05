@@ -17,30 +17,18 @@ class _EmptyPageState extends State<EmptyPage> {
     final mediaQuery = MediaQuery.of(context);
 
     return Platform.isAndroid
-        ? Container(
+        ? SizedBox(
             width: double.infinity,
             height:
                 (mediaQuery.size.height - 60 - mediaQuery.padding.top) * 0.6,
-            child: Platform.isAndroid
-                ? const Center(
-                    child: Text(
-                      'Please insert your first record, by using the button below.',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 20),
-                    ),
-                  )
-                : Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CupertinoButton.filled(
-                        alignment: Alignment.center,
-                        onPressed: () => widget.insertNewRecord(context),
-                        child: const Text('Please insert your first record'),
-                      ),
-                    ],
-                  ),
-          )
-        : Container(
+            child: const Center(
+              child: Text(
+                'Please insert your first record, by using the button below.',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 20),
+              ),
+            ))
+        : SizedBox(
             width: double.infinity,
             height:
                 (mediaQuery.size.height - 60 - mediaQuery.padding.top) * 0.6,
@@ -48,8 +36,17 @@ class _EmptyPageState extends State<EmptyPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
-                    'Please insert your first record\nTo do this, please use the button below.'),
+                  'Please insert your first record, by using the button below.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 20),
+                ),
+                CupertinoButton.filled(
+                  alignment: Alignment.center,
+                  onPressed: () => widget.insertNewRecord(context),
+                  child: const Text('New record'),
+                ),
               ],
-            ));
+            ),
+          );
   }
 }

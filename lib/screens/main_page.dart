@@ -18,6 +18,8 @@ class MainPage extends StatefulWidget {
 
   final Function insertNewRecord;
 
+  final Function insertNewRecordIOs;
+
   final Function deleteTransaction;
 
   List<Record> records;
@@ -28,6 +30,7 @@ class MainPage extends StatefulWidget {
     Key? key,
     required this.title,
     required this.amountSum,
+    required this.insertNewRecordIOs,
     required this.insertNewRecord,
     required this.deleteTransaction,
     required this.records,
@@ -40,10 +43,6 @@ class MainPage extends StatefulWidget {
 class MyHomePageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
-    void pushWelcome(BuildContext context) {
-      Navigator.of(context).pushNamed('/');
-    }
-
     final args =
         ModalRoute.of(context)!.settings.arguments as Map<String, double>;
 
@@ -83,27 +82,24 @@ class MyHomePageState extends State<MainPage> {
             ),
           )
         : CupertinoPageScaffold(
-            navigationBar: MyAppBarIos(widget.insertNewRecord),
+            navigationBar: MyAppBarIos(widget.insertNewRecordIOs),
             child: SafeArea(
               child: SingleChildScrollView(
-                child: Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        height: (mediaQuery.size.height -
-                                60 -
-                                mediaQuery.padding.top) *
-                            0.4,
-                        child: Chart(widget.amountSum(), maxAmount!),
-                      ),
-                      widget.records.isEmpty
-                          ? EmptyPage(widget.insertNewRecord)
-                          : UpdatedList(
-                              widget.deleteTransaction, widget.records),
-                    ],
-                  ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      height: (mediaQuery.size.height -
+                              60 -
+                              mediaQuery.padding.top) *
+                          0.4,
+                      child: Chart(widget.amountSum(), maxAmount!),
+                    ),
+                    widget.records.isEmpty
+                        ? EmptyPage(widget.insertNewRecordIOs)
+                        : UpdatedList(widget.deleteTransaction, widget.records),
+                  ],
                 ),
               ),
             ),
