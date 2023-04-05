@@ -66,34 +66,38 @@ class _NewRecordIosState extends State<NewRecordIos> {
   Widget build(BuildContext context) {
     return CupertinoAlertDialog(
       title: const Text('New Record'),
-      content: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextField(
-              decoration: const InputDecoration(
-                labelText: 'Insert name',
-                labelStyle: TextStyle(color: Colors.blueGrey),
+      content: Card(
+        color: Colors.transparent,
+        elevation: 0.0,
+        child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextField(
+                decoration: const InputDecoration(
+                  labelText: 'Insert name',
+                  labelStyle: TextStyle(color: Colors.blueGrey),
+                ),
+                controller: nameController,
+                onSubmitted: (_) => _saveData(),
               ),
-              controller: nameController,
-              onSubmitted: (_) => _saveData(),
-            ),
-            TextField(
-              keyboardType: TextInputType.number,
-              controller: amountController,
-              decoration: const InputDecoration(
-                labelText: 'Insert amount',
-                labelStyle: TextStyle(color: Colors.blueGrey),
+              TextField(
+                keyboardType: TextInputType.number,
+                controller: amountController,
+                decoration: const InputDecoration(
+                  labelText: 'Insert amount',
+                  labelStyle: TextStyle(color: Colors.blueGrey),
+                ),
+                onSubmitted: (_) => _saveData(),
               ),
-              onSubmitted: (_) => _saveData(),
-            ),
-            CupertinoButton(
-                onPressed: presentDate,
-                child: Text(
-                  elevatedDateSelectionButton(),
-                  style: const TextStyle(color: Colors.blueGrey),
-                )),
-          ]),
+              CupertinoButton(
+                  onPressed: presentDate,
+                  child: Text(
+                    elevatedDateSelectionButton(),
+                    style: const TextStyle(color: Colors.blueGrey),
+                  )),
+            ]),
+      ),
       actions: <CupertinoDialogAction>[
         CupertinoDialogAction(
           isDefaultAction: true,
