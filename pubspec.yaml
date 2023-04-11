@@ -66,6 +66,7 @@ flutter:
   assets:
      - images/random.png
      - images/arrow.png
+     - images/over.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

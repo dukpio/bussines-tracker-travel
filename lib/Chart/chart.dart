@@ -3,6 +3,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ChartData {
   ChartData(this.x, this.y);
+
   final String x;
   final double y;
 }
@@ -20,44 +21,51 @@ class Chart extends StatelessWidget {
       ChartData('Amount to be used', maxAmount - sum),
     ];
     return SizedBox(
-        width: 325,
-        height: 115,
-        child: sum < maxAmount
-            ? Container(
-                alignment: Alignment.center,
-                child: SfCircularChart(
-                    title: ChartTitle(
-                        text: 'Total budget: ' +
-                            maxAmount.toString() +
-                            '\nCurrent status: ' +
-                            sum.toStringAsFixed(2) +
-                            '/' +
-                            maxAmount.toStringAsFixed(2),
-                        textStyle:
-                            const TextStyle(fontStyle: FontStyle.italic)),
-                    series: <CircularSeries>[
-                      PieSeries<ChartData, String>(
-                          onPointTap: (ChartPointDetails details) {},
-                          dataSource: chartData,
-                          xValueMapper: (ChartData data, _) => data.x,
-                          yValueMapper: (ChartData data, _) => data.y,
-                          explode: true,
-                          explodeIndex: 1,
-                          radius: '85%')
-                    ]),
-              )
-            : Card(
-                color: Colors.amber,
-                elevation: 10,
-                child: Center(
+      width: 325,
+      height: 115,
+      child: sum < maxAmount
+          ? Container(
+              alignment: Alignment.center,
+              child: SfCircularChart(
+                  title: ChartTitle(
+                      text: 'Total budget: ' +
+                          maxAmount.toString() +
+                          '\nCurrent status: ' +
+                          sum.toStringAsFixed(2) +
+                          '/' +
+                          maxAmount.toStringAsFixed(2),
+                      textStyle: const TextStyle(fontStyle: FontStyle.italic)),
+                  series: <CircularSeries>[
+                    PieSeries<ChartData, String>(
+                        onPointTap: (ChartPointDetails details) {},
+                        dataSource: chartData,
+                        xValueMapper: (ChartData data, _) => data.x,
+                        yValueMapper: (ChartData data, _) => data.y,
+                        explode: true,
+                        explodeIndex: 1,
+                        radius: '85%')
+                  ]),
+            )
+          : Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                const Center(
                   child: Text(
-                    'You are over budget!\nCurrent status: ' +
-                        sum.toStringAsFixed(2) +
-                        '/' +
-                        maxAmount.toString(),
-                    style: const TextStyle(fontWeight: FontWeight.bold),
+                    'You are over budget!',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 20),
                   ),
                 ),
-              ));
+                SizedBox(
+                  child: Image.asset('images/over.png'),
+                ),
+                Text(
+                  'Current status: ${sum.toStringAsFixed(2)}/$maxAmount',
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 20),
+                ),
+              ],
+            ),
+    );
   }
 }

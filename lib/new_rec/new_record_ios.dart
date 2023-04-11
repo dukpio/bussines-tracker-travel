@@ -67,7 +67,7 @@ class _NewRecordIosState extends State<NewRecordIos> {
     return CupertinoAlertDialog(
       title: const Text('New Record'),
       content: Card(
-        color: Colors.transparent,
+        color: Colors.white54,
         elevation: 0.0,
         child: Column(
             mainAxisSize: MainAxisSize.min,
