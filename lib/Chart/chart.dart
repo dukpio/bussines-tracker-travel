@@ -29,7 +29,7 @@ class Chart extends StatelessWidget {
               child: SfCircularChart(
                   title: ChartTitle(
                       text: 'Total budget: ' +
-                          maxAmount.toString() +
+                          maxAmount.toStringAsFixed(2) +
                           '\nCurrent status: ' +
                           sum.toStringAsFixed(2) +
                           '/' +
@@ -53,10 +53,11 @@ class Chart extends StatelessWidget {
                   child: Text(
                     'You are over budget!',
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 22),
+                    style: TextStyle(fontSize: 21),
                   ),
                 ),
-                Expanded(
+                SizedBox(
+                  height: 100,
                   child: Image.asset('images/over.png'),
                 ),
                 Text(

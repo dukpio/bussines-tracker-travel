@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 class NewRecordIos extends StatefulWidget {
@@ -82,7 +83,12 @@ class _NewRecordIosState extends State<NewRecordIos> {
                 onSubmitted: (_) => _saveData(),
               ),
               TextField(
-                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                ],
+                keyboardType: const TextInputType.numberWithOptions(
+                  decimal: true,
+                ),
                 controller: amountController,
                 decoration: const InputDecoration(
                   labelText: 'Insert amount',
