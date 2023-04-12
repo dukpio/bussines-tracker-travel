@@ -24,7 +24,8 @@ class _NewRecordIosState extends State<NewRecordIos> {
           return SizedBox(
             height: MediaQuery.of(context).copyWith().size.height * 0.25,
             child: CupertinoDatePicker(
-              backgroundColor: Colors.white54,
+              backgroundColor:
+                  CupertinoColors.systemBackground.resolveFrom(context),
               mode: CupertinoDatePickerMode.date,
               onDateTimeChanged: (DateTime markedDate) {
                 setState(() {
@@ -68,7 +69,6 @@ class _NewRecordIosState extends State<NewRecordIos> {
       title: const Text('New Record'),
       content: Card(
         color: Colors.white54,
-        elevation: 0.0,
         child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,

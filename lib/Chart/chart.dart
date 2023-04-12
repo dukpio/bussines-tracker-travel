@@ -53,10 +53,10 @@ class Chart extends StatelessWidget {
                   child: Text(
                     'You are over budget!',
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: 22),
                   ),
                 ),
-                SizedBox(
+                Expanded(
                   child: Image.asset('images/over.png'),
                 ),
                 Text(

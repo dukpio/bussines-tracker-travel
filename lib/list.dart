@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'models/record.dart';
 import 'package:intl/intl.dart';
+
+import 'models/record.dart';
 
 class ListofRecords extends StatelessWidget {
   final List<Record> records;
@@ -17,19 +18,17 @@ class ListofRecords extends StatelessWidget {
           itemBuilder: (context, index) {
             return Card(
               elevation: 5,
-              margin: EdgeInsets.symmetric(
+              margin: const EdgeInsets.symmetric(
                 vertical: 8,
                 horizontal: 5,
               ),
               key: ValueKey(records[index]),
               child: ListTile(
-                leading: Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Text(
-                      records[index].amount.toStringAsFixed(2),
-                      style: const TextStyle(fontSize: 15),
-                    ),
+                leading: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Text(
+                    records[index].amount.toStringAsFixed(2),
+                    style: const TextStyle(fontSize: 15),
                   ),
                 ),
                 title: Text(

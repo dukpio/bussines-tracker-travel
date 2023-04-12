@@ -33,7 +33,7 @@ class _EmptyPageState extends State<EmptyPage> {
             height:
                 (mediaQuery.size.height - 60 - mediaQuery.padding.top) * 0.6,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 const Text(
                   'Please insert your first record, by using the button below.',
