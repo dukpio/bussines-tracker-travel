@@ -1,4 +1,4 @@
-package com.example.business_travel_tracker
+package com.dukpio.business_travel_tracker
 
 import io.flutter.embedding.android.FlutterActivity
 

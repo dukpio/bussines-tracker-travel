@@ -51,7 +51,7 @@ class Chart extends StatelessWidget {
               children: [
                 const Center(
                   child: Text(
-                    'You are over budget!',
+                    'You are over the budget!',
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 21),
                   ),
@@ -61,7 +61,7 @@ class Chart extends StatelessWidget {
                   child: Image.asset('images/over.png'),
                 ),
                 Text(
-                  'Current status: ${sum.toStringAsFixed(2)}/$maxAmount',
+                  'Current status: ${sum.toStringAsFixed(2)}/${maxAmount.toStringAsFixed(2)}',
                   textAlign: TextAlign.center,
                   style: const TextStyle(fontSize: 20),
                 ),
