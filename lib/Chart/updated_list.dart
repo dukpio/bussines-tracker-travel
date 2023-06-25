@@ -2,16 +2,15 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 import '../list.dart';
 import '../models/record.dart';
 
 class UpdatedList extends StatefulWidget {
-  final List<Record> records;
+  Box travelBox = Hive.box<Record>('travel');
 
-  final Function deleteTransaction;
-
-  UpdatedList(this.deleteTransaction, this.records, {super.key});
+  UpdatedList({super.key});
 
   @override
   State<UpdatedList> createState() => _UpdatedListState();
@@ -23,17 +22,15 @@ class _UpdatedListState extends State<UpdatedList> {
     final mediaQuery = MediaQuery.of(context);
 
     return Platform.isAndroid
-        ? Container(
+        ? SizedBox(
             height:
                 (mediaQuery.size.height - 60 - mediaQuery.padding.top) * 0.6,
-            child: SingleChildScrollView(
-                child: ListofRecords(widget.records, widget.deleteTransaction)),
+            child: SingleChildScrollView(child: ListofRecords()),
           )
-        : Container(
+        : SizedBox(
             height:
                 (mediaQuery.size.height - 60 - mediaQuery.padding.top) * 0.6,
-            child: SingleChildScrollView(
-                child: ListofRecords(widget.records, widget.deleteTransaction)),
+            child: SingleChildScrollView(child: ListofRecords()),
           );
   }
 }

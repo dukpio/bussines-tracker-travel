@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class WelcomePage extends StatefulWidget {
-  WelcomePage(double maxAmount, {super.key});
+  const WelcomePage(double maxAmount, {super.key});
 
   @override
   State<WelcomePage> createState() => _WelcomePageState();
@@ -32,7 +32,6 @@ class _WelcomePageState extends State<WelcomePage> {
       Navigator.of(context)
           .pushNamed('/main_page', arguments: {'maxAmount': maxAmount});
     }
-    ;
   }
 
   @override

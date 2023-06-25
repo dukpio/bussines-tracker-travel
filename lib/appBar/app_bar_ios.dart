@@ -4,7 +4,7 @@ class MyAppBarIos extends StatelessWidget
     implements ObstructingPreferredSizeWidget {
   final Function insertNewRecord;
 
-  MyAppBarIos(this.insertNewRecord, {super.key});
+  const MyAppBarIos(this.insertNewRecord, {super.key});
 
   @override
   Widget build(BuildContext context) {

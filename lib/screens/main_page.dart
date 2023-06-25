@@ -5,6 +5,7 @@ import 'package:business_travel_tracker/Chart/updated_list.dart';
 import 'package:business_travel_tracker/appBar/app_bar_Material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 import '../Chart/chart.dart';
 import '../appBar/app_bar_ios.dart';
@@ -20,9 +21,7 @@ class MainPage extends StatefulWidget {
 
   final Function insertNewRecordIOs;
 
-  final Function deleteTransaction;
-
-  List<Record> records;
+  Box travelBox = Hive.box<Record>('travel');
 
   final String title;
 
@@ -32,8 +31,6 @@ class MainPage extends StatefulWidget {
     required this.amountSum,
     required this.insertNewRecordIOs,
     required this.insertNewRecord,
-    required this.deleteTransaction,
-    required this.records,
   }) : super(key: key);
 
   @override
@@ -66,9 +63,9 @@ class MyHomePageState extends State<MainPage> {
                                 mediaQuery.padding.top) *
                             0.4,
                         child: Chart(widget.amountSum(), maxAmount!)),
-                    widget.records.isEmpty
+                    widget.travelBox.isEmpty
                         ? EmptyPage(widget.insertNewRecord)
-                        : UpdatedList(widget.deleteTransaction, widget.records),
+                        : UpdatedList(),
                   ],
                 ),
               ),
@@ -96,9 +93,9 @@ class MyHomePageState extends State<MainPage> {
                           0.4,
                       child: Chart(widget.amountSum(), maxAmount!),
                     ),
-                    widget.records.isEmpty
+                    widget.travelBox.isEmpty
                         ? EmptyPage(widget.insertNewRecordIOs)
-                        : UpdatedList(widget.deleteTransaction, widget.records),
+                        : UpdatedList(),
                   ],
                 ),
               ),

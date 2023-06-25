@@ -5,11 +5,16 @@ import 'package:business_travel_tracker/screens/main_page.dart';
 import 'package:business_travel_tracker/screens/welcome_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import 'models/record.dart';
 import 'new_rec/new_record_material.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  Hive.registerAdapter(RecordAdapter());
+  await Hive.openBox<Record>('travel');
   runApp(const MyApp());
 }
 
@@ -21,6 +26,31 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  Box travelBox = Hive.box<Record>('travel');
+
+  @override
+  void initState() {
+    super.initState();
+    travelBox = Hive.box<Record>('travel');
+  }
+
+  double maxAmount = 0;
+
+  void refreshRecords() {
+    final data = travelBox.keys.map((key) {
+      final value = travelBox.get(key);
+      return {
+        'key': key,
+        'name': value['name'],
+        'amount': value['amount'],
+        'date': value['date'],
+        'id': value['id']
+      };
+    }).toList();
+
+    setState(() {});
+  }
+
   void addNewRecord(
     String name,
     double amount,
@@ -33,7 +63,13 @@ class _MyAppState extends State<MyApp> {
       id: DateTime.now().toString(),
     );
     setState(() {
-      records.add(record);
+      travelBox.add(record);
+      travelBox.values.forEach((element) {
+        print(element.id);
+        print(element.date);
+        print(element.amount);
+      });
+      print(travelBox.values);
     });
   }
 
@@ -63,26 +99,14 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  void deleteTransaction(String id) {
-    setState(() {
-      records.removeWhere((text) {
-        return text.id == id;
-      });
-    });
-  }
-
   double amountSum() {
-    if (records.isEmpty) {
+    if (travelBox.isEmpty) {
       return 0;
     }
-    return records
+    return travelBox.values
         .map((record) => record.amount)
         .reduce((value, element) => value + element);
   }
-
-  final List<Record> records = [];
-
-  double maxAmount = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -93,8 +117,6 @@ class _MyAppState extends State<MyApp> {
             insertNewRecord: insertNewRecord,
             insertNewRecordIOs: insertNewRecordIOs,
             title: 'Business Travel Tracker',
-            deleteTransaction: deleteTransaction,
-            records: records,
           )
     };
     return Platform.isIOS
@@ -121,10 +143,12 @@ class _MyAppState extends State<MyApp> {
             debugShowCheckedModeBanner: false,
             title: 'Business Travel Tracker',
             theme: ThemeData(
-              backgroundColor: const Color.fromARGB(255, 195, 231, 228),
-              primarySwatch: Colors.blueGrey,
               appBarTheme: const AppBarTheme(centerTitle: true),
               fontFamily: 'Garute',
+              colorScheme:
+                  ColorScheme.fromSwatch(primarySwatch: Colors.blueGrey)
+                      .copyWith(
+                          background: const Color.fromARGB(255, 195, 231, 228)),
             ),
             routes: routes,
             onGenerateRoute: (settings) {
