@@ -6,6 +6,7 @@ import 'package:business_travel_tracker/screens/welcome_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'models/record.dart';
 import 'new_rec/new_record_material.dart';
@@ -27,6 +28,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   Box travelBox = Hive.box<Record>('travel');
+  final Future<SharedPreferences> maxAmount = SharedPreferences.getInstance();
 
   @override
   void initState() {
@@ -34,7 +36,7 @@ class _MyAppState extends State<MyApp> {
     travelBox = Hive.box<Record>('travel');
   }
 
-  double maxAmount = 0;
+  // double maxAmount = 0;
 
   void refreshRecords() {
     final data = travelBox.keys.map((key) {
@@ -111,7 +113,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     final routes = {
-      '/': (context) => WelcomePage(maxAmount),
+      '/': (context) => WelcomePage(),
       '/main_page': (context) => MainPage(
             amountSum: amountSum,
             insertNewRecord: insertNewRecord,
@@ -130,16 +132,17 @@ class _MyAppState extends State<MyApp> {
             onGenerateRoute: (settings) {
               print(settings.arguments);
               return MaterialPageRoute(
-                builder: (context) => WelcomePage(maxAmount),
+                builder: (context) => WelcomePage(),
               );
             },
             onUnknownRoute: (settings) {
               return MaterialPageRoute(
-                builder: (context) => WelcomePage(maxAmount),
+                builder: (context) => WelcomePage(),
               );
             },
           )
         : MaterialApp(
+            // initialRoute: travelBox.isEmpty ? "/" : "/main_page",
             debugShowCheckedModeBanner: false,
             title: 'Business Travel Tracker',
             theme: ThemeData(
@@ -153,12 +156,12 @@ class _MyAppState extends State<MyApp> {
             routes: routes,
             onGenerateRoute: (settings) {
               return MaterialPageRoute(
-                builder: (context) => WelcomePage(maxAmount),
+                builder: (context) => WelcomePage(),
               );
             },
             onUnknownRoute: (settings) {
               return MaterialPageRoute(
-                builder: (context) => WelcomePage(maxAmount),
+                builder: (context) => WelcomePage(),
               );
             },
           );

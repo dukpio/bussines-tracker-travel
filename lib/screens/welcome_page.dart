@@ -3,25 +3,50 @@ import 'dart:io';
 import 'package:business_travel_tracker/appBar/app_bar_Material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../models/record.dart';
 
 class WelcomePage extends StatefulWidget {
-  const WelcomePage(double maxAmount, {super.key});
+  const WelcomePage({super.key});
 
   @override
   State<WelcomePage> createState() => _WelcomePageState();
 }
 
 class _WelcomePageState extends State<WelcomePage> {
-  double maxAmount = 0;
+  Box travelBox = Hive.box<Record>('travel');
+  // double maxAmount = 0;
   final maxAmountController = TextEditingController();
 
-  void saveMaxAmount() {
+  // void saveMaxAmount() {
+  //   if (maxAmountController.text.isEmpty) {
+  //     return;
+  //   } else {
+  //     setState(() {
+  //       maxAmount = double.parse(maxAmountController.text);
+  //     });
+  //   }
+  // }
+
+  // void pushMain(BuildContext context) {
+  //   if (maxAmountController.text.isEmpty) {
+  //     return;
+  //   } else {
+  //     Navigator.of(context)
+  //         .pushNamed('/main_page', arguments: {'maxAmount': maxAmount});
+  //   }
+  // }
+
+  Future<void> saveMaxAmount() async {
     if (maxAmountController.text.isEmpty) {
       return;
     } else {
-      setState(() {
-        maxAmount = double.parse(maxAmountController.text);
-      });
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setDouble(
+          'maxAmount', double.parse(maxAmountController.text));
+      print(prefs);
     }
   }
 
@@ -29,8 +54,7 @@ class _WelcomePageState extends State<WelcomePage> {
     if (maxAmountController.text.isEmpty) {
       return;
     } else {
-      Navigator.of(context)
-          .pushNamed('/main_page', arguments: {'maxAmount': maxAmount});
+      Navigator.of(context).pushNamed('/main_page');
     }
   }
 

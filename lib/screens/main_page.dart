@@ -6,6 +6,7 @@ import 'package:business_travel_tracker/appBar/app_bar_Material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Chart/chart.dart';
 import '../appBar/app_bar_ios.dart';
@@ -38,12 +39,37 @@ class MainPage extends StatefulWidget {
 }
 
 class MyHomePageState extends State<MainPage> {
+  double maxAmount = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadMaxAmount();
+  }
+
+  // Loading counter value on start
+  void _loadMaxAmount() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      maxAmount = (prefs.getDouble('maxAmount') ?? 0);
+    });
+  }
+
+  // // Incrementing counter after click
+  // void _incrementCounter() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   setState(() {
+  //     _counter = (prefs.getInt('counter') ?? 0) + 1;
+  //     prefs.setInt('counter', _counter);
+  //   });
+  // }
+
   @override
   Widget build(BuildContext context) {
-    final args =
-        ModalRoute.of(context)!.settings.arguments as Map<String, double>;
-
-    double? maxAmount = args['maxAmount'];
+    // final args =
+    //     ModalRoute.of(context)!.settings.arguments as Map<String, double>;
+    //
+    // double? maxAmount = args['maxAmount'];
 
     final mediaQuery = MediaQuery.of(context);
 
