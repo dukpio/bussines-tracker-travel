@@ -1,12 +1,13 @@
 import 'dart:io';
 
+import 'package:extended_masked_text/extended_masked_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class NewRecord extends StatefulWidget {
   final Function addText;
-  const NewRecord(this.addText);
+  const NewRecord(this.addText, {super.key});
 
   @override
   State<NewRecord> createState() => _NewRecordState();
@@ -14,7 +15,7 @@ class NewRecord extends StatefulWidget {
 
 class _NewRecordState extends State<NewRecord> {
   final nameController = TextEditingController();
-  final amountController = TextEditingController();
+  final amountController = MaskedTextController(mask: '000.00');
   late String selectedDateString = '';
   late DateTime selectedDate;
 

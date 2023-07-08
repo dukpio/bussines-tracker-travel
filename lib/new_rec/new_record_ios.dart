@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 class NewRecordIos extends StatefulWidget {
   final Function addText;
 
-  NewRecordIos(this.addText);
+  const NewRecordIos(this.addText, {super.key});
 
   @override
   State<NewRecordIos> createState() => _NewRecordIosState();

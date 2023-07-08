@@ -5,6 +5,8 @@ import 'package:business_travel_tracker/Chart/updated_list.dart';
 import 'package:business_travel_tracker/appBar/app_bar_Material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Chart/chart.dart';
 import '../appBar/app_bar_ios.dart';
@@ -20,9 +22,7 @@ class MainPage extends StatefulWidget {
 
   final Function insertNewRecordIOs;
 
-  final Function deleteTransaction;
-
-  List<Record> records;
+  Box travelBox = Hive.box<Record>('travel');
 
   final String title;
 
@@ -32,8 +32,6 @@ class MainPage extends StatefulWidget {
     required this.amountSum,
     required this.insertNewRecordIOs,
     required this.insertNewRecord,
-    required this.deleteTransaction,
-    required this.records,
   }) : super(key: key);
 
   @override
@@ -41,13 +39,23 @@ class MainPage extends StatefulWidget {
 }
 
 class MyHomePageState extends State<MainPage> {
+  double maxAmount = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadMaxAmount();
+  }
+
+  void _loadMaxAmount() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      maxAmount = (prefs.getDouble('maxAmount') ?? 0);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final args =
-        ModalRoute.of(context)!.settings.arguments as Map<String, double>;
-
-    double? maxAmount = args['maxAmount'];
-
     final mediaQuery = MediaQuery.of(context);
 
     return Platform.isAndroid
@@ -66,9 +74,9 @@ class MyHomePageState extends State<MainPage> {
                                 mediaQuery.padding.top) *
                             0.4,
                         child: Chart(widget.amountSum(), maxAmount!)),
-                    widget.records.isEmpty
+                    widget.travelBox.isEmpty
                         ? EmptyPage(widget.insertNewRecord)
-                        : UpdatedList(widget.deleteTransaction, widget.records),
+                        : UpdatedList(),
                   ],
                 ),
               ),
@@ -96,9 +104,9 @@ class MyHomePageState extends State<MainPage> {
                           0.4,
                       child: Chart(widget.amountSum(), maxAmount!),
                     ),
-                    widget.records.isEmpty
+                    widget.travelBox.isEmpty
                         ? EmptyPage(widget.insertNewRecordIOs)
-                        : UpdatedList(widget.deleteTransaction, widget.records),
+                        : UpdatedList(),
                   ],
                 ),
               ),
