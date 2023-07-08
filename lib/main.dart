@@ -27,16 +27,22 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  double maxAmount = 0;
   Box travelBox = Hive.box<Record>('travel');
-  final Future<SharedPreferences> maxAmount = SharedPreferences.getInstance();
 
   @override
   void initState() {
     super.initState();
     travelBox = Hive.box<Record>('travel');
+    _loadMaxAmount();
   }
 
-  // double maxAmount = 0;
+  void _loadMaxAmount() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      maxAmount = (prefs.getDouble('maxAmount') ?? 0);
+    });
+  }
 
   void refreshRecords() {
     final data = travelBox.keys.map((key) {
@@ -66,12 +72,6 @@ class _MyAppState extends State<MyApp> {
     );
     setState(() {
       travelBox.add(record);
-      travelBox.values.forEach((element) {
-        print(element.id);
-        print(element.date);
-        print(element.amount);
-      });
-      print(travelBox.values);
     });
   }
 
@@ -113,7 +113,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     final routes = {
-      '/': (context) => WelcomePage(),
+      '/': (context) => const WelcomePage(),
       '/main_page': (context) => MainPage(
             amountSum: amountSum,
             insertNewRecord: insertNewRecord,
@@ -123,6 +123,7 @@ class _MyAppState extends State<MyApp> {
     };
     return Platform.isIOS
         ? CupertinoApp(
+            initialRoute: maxAmount != 0 ? '/' : '/main_page',
             localizationsDelegates: const [
               DefaultMaterialLocalizations.delegate,
             ],
@@ -132,17 +133,17 @@ class _MyAppState extends State<MyApp> {
             onGenerateRoute: (settings) {
               print(settings.arguments);
               return MaterialPageRoute(
-                builder: (context) => WelcomePage(),
+                builder: (context) => const WelcomePage(),
               );
             },
             onUnknownRoute: (settings) {
               return MaterialPageRoute(
-                builder: (context) => WelcomePage(),
+                builder: (context) => const WelcomePage(),
               );
             },
           )
         : MaterialApp(
-            // initialRoute: travelBox.isEmpty ? "/" : "/main_page",
+            initialRoute: maxAmount != 0 ? '/' : '/main_page',
             debugShowCheckedModeBanner: false,
             title: 'Business Travel Tracker',
             theme: ThemeData(
@@ -156,12 +157,12 @@ class _MyAppState extends State<MyApp> {
             routes: routes,
             onGenerateRoute: (settings) {
               return MaterialPageRoute(
-                builder: (context) => WelcomePage(),
+                builder: (context) => const WelcomePage(),
               );
             },
             onUnknownRoute: (settings) {
               return MaterialPageRoute(
-                builder: (context) => WelcomePage(),
+                builder: (context) => const WelcomePage(),
               );
             },
           );

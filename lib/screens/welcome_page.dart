@@ -17,27 +17,7 @@ class WelcomePage extends StatefulWidget {
 
 class _WelcomePageState extends State<WelcomePage> {
   Box travelBox = Hive.box<Record>('travel');
-  // double maxAmount = 0;
   final maxAmountController = TextEditingController();
-
-  // void saveMaxAmount() {
-  //   if (maxAmountController.text.isEmpty) {
-  //     return;
-  //   } else {
-  //     setState(() {
-  //       maxAmount = double.parse(maxAmountController.text);
-  //     });
-  //   }
-  // }
-
-  // void pushMain(BuildContext context) {
-  //   if (maxAmountController.text.isEmpty) {
-  //     return;
-  //   } else {
-  //     Navigator.of(context)
-  //         .pushNamed('/main_page', arguments: {'maxAmount': maxAmount});
-  //   }
-  // }
 
   Future<void> saveMaxAmount() async {
     if (maxAmountController.text.isEmpty) {

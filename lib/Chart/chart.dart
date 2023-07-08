@@ -12,7 +12,7 @@ class Chart extends StatelessWidget {
   final double sum;
   final double maxAmount;
 
-  const Chart(this.sum, this.maxAmount, {super.key});
+  Chart(this.sum, this.maxAmount);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,12 @@ class Chart extends StatelessWidget {
               alignment: Alignment.center,
               child: SfCircularChart(
                   title: ChartTitle(
-                      text: 'Total budget: ${maxAmount.toStringAsFixed(2)}\nCurrent status: ${sum.toStringAsFixed(2)}/${maxAmount.toStringAsFixed(2)}',
+                      text: 'Total budget: ' +
+                          maxAmount.toStringAsFixed(2) +
+                          '\nCurrent status: ' +
+                          sum.toStringAsFixed(2) +
+                          '/' +
+                          maxAmount.toStringAsFixed(2),
                       textStyle: const TextStyle(fontStyle: FontStyle.italic)),
                   series: <CircularSeries>[
                     PieSeries<ChartData, String>(

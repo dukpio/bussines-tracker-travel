@@ -56,8 +56,6 @@ class ListofRecords extends StatelessWidget {
                     onPressed: () async {
                       await travelBox.deleteAt(index);
                     },
-                    // onPressed: () => deleteTransaction(
-                    //     travelBox.values.toList()[index].amount),
                   ),
                 ),
               );
