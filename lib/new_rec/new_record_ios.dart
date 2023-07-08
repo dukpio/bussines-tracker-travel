@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 class NewRecordIos extends StatefulWidget {
   final Function addText;
+
   NewRecordIos(this.addText);
 
   @override
@@ -20,29 +22,21 @@ class _NewRecordIosState extends State<NewRecordIos> {
     showCupertinoModalPopup(
         context: context,
         builder: (BuildContext builder) {
-          return Container(
+          return SizedBox(
             height: MediaQuery.of(context).copyWith().size.height * 0.25,
-            color: Colors.white,
-            child: Column(
-              children: [
-                CupertinoDatePicker(
-                  mode: CupertinoDatePickerMode.date,
-                  onDateTimeChanged: (DateTime markedDate) {
-                    setState(() {
-                      selectedDate = markedDate;
-                      selectedDateString =
-                          DateFormat.MMMMd().format(markedDate);
-                    });
-                  },
-                  initialDateTime: DateTime.now(),
-                  minimumDate: DateTime(2021, 1, 1, 00, 00),
-                  maximumDate: DateTime.now(),
-                ),
-                CupertinoButton(
-                  child: const Text('Close'),
-                  onPressed: () => Navigator.of(context).pop(),
-                )
-              ],
+            child: CupertinoDatePicker(
+              backgroundColor:
+                  CupertinoColors.systemBackground.resolveFrom(context),
+              mode: CupertinoDatePickerMode.date,
+              onDateTimeChanged: (DateTime markedDate) {
+                setState(() {
+                  selectedDate = markedDate;
+                  selectedDateString = DateFormat.MMMMd().format(markedDate);
+                });
+              },
+              initialDateTime: DateTime.now(),
+              minimumDate: DateTime(2021, 1, 1, 00, 00),
+              maximumDate: DateTime.now(),
             ),
           );
         });
@@ -75,25 +69,39 @@ class _NewRecordIosState extends State<NewRecordIos> {
     return CupertinoAlertDialog(
       title: const Text('New Record'),
       content: Card(
-        elevation: 0.0,
+        color: Colors.white54,
         child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               TextField(
-                decoration: const InputDecoration(labelText: 'Insert name'),
+                decoration: const InputDecoration(
+                  labelText: 'Insert name',
+                  labelStyle: TextStyle(color: Colors.blueGrey),
+                ),
                 controller: nameController,
                 onSubmitted: (_) => _saveData(),
               ),
               TextField(
-                keyboardType: TextInputType.number,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                ],
+                keyboardType: const TextInputType.numberWithOptions(
+                  decimal: true,
+                ),
                 controller: amountController,
-                decoration: const InputDecoration(labelText: 'Insert amount'),
+                decoration: const InputDecoration(
+                  labelText: 'Insert amount',
+                  labelStyle: TextStyle(color: Colors.blueGrey),
+                ),
                 onSubmitted: (_) => _saveData(),
               ),
               CupertinoButton(
                   onPressed: presentDate,
-                  child: Text(elevatedDateSelectionButton())),
+                  child: Text(
+                    elevatedDateSelectionButton(),
+                    style: const TextStyle(color: Colors.blueGrey),
+                  )),
             ]),
       ),
       actions: <CupertinoDialogAction>[
