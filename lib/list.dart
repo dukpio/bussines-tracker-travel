@@ -24,11 +24,16 @@ class ListofRecords extends StatelessWidget {
               ),
               key: ValueKey(records[index]),
               child: ListTile(
-                leading: Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Text(
-                    records[index].amount.toStringAsFixed(2),
-                    style: const TextStyle(fontSize: 15),
+                leading: Card(
+                  margin: EdgeInsets.all(3),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(60)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Text(
+                      records[index].amount.toStringAsFixed(2),
+                      style: const TextStyle(fontSize: 15),
+                    ),
                   ),
                 ),
                 title: Text(
